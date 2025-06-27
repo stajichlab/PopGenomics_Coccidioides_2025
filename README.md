@@ -4,8 +4,8 @@ Coccidioides Population Genomics Analysis
 Subfolders organized around mapping to a specific reference and species sample set.
 
 1. Dataset
-   * [C_immitis.samples.csv](_C. immitis_ strain set)
-   * [C_posadasii.samples.csv](_C. posadasii_ strain set)
+   * [_C. immitis_ strains](Genotyping/C_immitis.samples.csv)
+   * [_C. posadasii_ strains](C_posadasii.samples.csv)
 2. Primary Genotyping and Comparison Analyses
    * Variant calling (reads to VCF)
    * INDELs
@@ -16,4 +16,3 @@ Subfolders organized around mapping to a specific reference and species sample s
   * Identifying outlier genes with high substitution counts
   * GWAS tests for association with strain traits
   * Drug resistance alleles
-   
