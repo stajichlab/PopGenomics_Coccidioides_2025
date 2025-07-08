@@ -59,7 +59,7 @@ if [ -z $SLICEVCF ]; then
 	SLICEVCF=vcf_slice
 fi
 mkdir -p $SLICEVCF
-for POPNAME in $(yq eval '.Populations | keys' $POPYAML | grep -v Cposadasii | perl -p -e 's/^\s*\-\s*//')
+for POPNAME in $(yq eval '.Populations | keys' $POPYAML | perl -p -e 's/^\s*\-\s*//')
 do
 	FILES=$(yq eval '.Populations.'$POPNAME'[]' $POPYAML | perl -p -e "s/(\S+)/-V $GVCFFOLDER\/\$1.g.vcf.gz/g"  )
 	INTERVALS=$(cut -f1 $REFGENOME.fai  | sed -n "${NSTART},${NEND}p" | perl -p -e 's/(\S+)\n/--intervals $1 /g')
@@ -67,10 +67,8 @@ do
 	mkdir -p $SLICEVCF/$POPNAME
 	STEM=$SLICEVCF/$POPNAME/$PREFIX.$N
 	GENOVCFOUT=$STEM.all.vcf
-	FILTERSNP=$STEM.SNP.filter.vcf
-	FILTERINDEL=$STEM.INDEL.filter.vcf
-	SELECTSNP=$STEM.SNP.selected.vcf
-	SELECTINDEL=$STEM.INDEL.selected.vcf
+	SELECTSNP=$STEM.bcftools.SNP.bcf
+	SELECTINDEL=$STEM.bcftools.INDEL.bcf
 	echo "$STEM is stem; GENOVCFOUT=$STEM.all.vcf POPNAME=$POPNAME slice=$SLICEVCF"
 	mkdir -p $TEMPDIR
 	if [ ! -f $GENOVCFOUT.gz ]; then
@@ -81,7 +79,6 @@ do
 		#gatk  --java-options "-Xmx$MEM -Xms$MEM" GenomicsDBImport --genomicsdb-workspace-path $DB $FILES $INTERVALS  --reader-threads $CPU
 		time gatk GenotypeGVCFs --reference $REFGENOME --output $GENOVCFOUT -V gendb://$DB --tmp-dir $TEMPDIR -G StandardAnnotation -G AS_StandardAnnotation 
 
-		#--genomicsdb-use-bcf-codec true
 
 		ls -l $TEMPDIR
 		rm -rf $DB
@@ -105,35 +102,10 @@ do
 	    tabix $STEM.$TYPE.vcf.gz
 	fi
 
-#	if [[ ! -f $FILTERSNP.gz || $STEM.$TYPE.vcf.gz -nt $FILTERSNP.gz ]]; then
-
-	    #gatk VariantFiltration --output $FILTERSNP --tmp-dir $TEMPDIR \
-	    #	--variant $STEM.$TYPE.vcf.gz -R $REFGENOME \
-	    #	--cluster-window-size 10  \
-	    # --filter-expression "QD < 2.0" --filter-name QualByDepth \
-	    # --filter-expression "MQ < 40.0" --filter-name MapQual \
-	    # --filter-expression "SOR > 3.0" --filter-name StrandOddsRatio \
-	    # --filter-expression "FS > 60.0" --filter-name FisherStrandBias \
-	    #	--missing-values-evaluate-as-failing --create-output-variant-index false
-
-		#--filter-expression "QUAL < 30" --filter-name QScore \
-	#	--filter-expression "MQRankSum < -12.5" --filter-name MapQualityRankSum \
-	#	--filter-expression "ReadPosRankSum < -8.0" --filter-name ReadPosRank \
-
-	    #bgzip $FILTERSNP
-#	    tabix $FILTERSNP.gz
-#	fi
-
-	#if [[ ! -f $SELECTSNP.gz || $FILTERSNP.gz -nt $SELECTSNP.gz ]]; then
-	if [[ ! -f $SELECTSNP.gz || $STEM.$TYPE.vcf.gz -nt $SELECTSNP.gz ]]; then
-	  bcftools filter -e 'QD < 2.0 || MQ < 40.0 || SOR > 3.0 || FS > 60.0 || MQRankSum < -12.5 || ReadPosRankSum < -12.5' \
-		    --threads $CPU -O z -o $SELECTSNP.gz $STEM.$TYPE.vcf.gz
-	    #gatk SelectVariants -R $REFGENOME \
-	#	--variant $FILTERSNP.gz \
-	#	--output $SELECTSNP \
-	#	--exclude-filtered --create-output-variant-index false
-	#    bgzip $SELECTSNP
-	    tabix $SELECTSNP.gz
+	if [[ ! -f $SELECTSNP || $STEM.$TYPE.vcf.gz -nt $SELECTSNP ]]; then
+	    bcftools filter -Ob -o $SELECTSNP -g3 -G10 -e 'QD < 2.0 || MQ < 40.0 || SOR > 3.0 || FS > 60.0 || MQRankSum < -12.5 || ReadPosRankSum < -12.5 || QUAL <10 || (AC<2 && QUAL<15)' $STEM.$TYPE.vcf.gz 
+	  tabix $SELECTSNP
+	  bcftools stats $SELECTSNP > $SELECTSNP.stats
 	fi
 
 	TYPE=INDEL
@@ -147,30 +119,10 @@ do
 	    tabix $STEM.$TYPE.vcf.gz
 	fi
 
-	#if [[ ! -f $FILTERINDEL.gz || $STEM.$TYPE.vcf.gz -nt $FILTERINDEL.gz ]]; then
-	    # gatk VariantFiltration --output $FILTERINDEL \
-#
-#		--variant $STEM.$TYPE.vcf.gz -R $REFGENOME \
-#		--cluster-window-size 10  -filter "QD < 2.0" --filter-name QualByDepth \
-#		-filter "FS > 200.0" --filter-name FisherStrandBias \
-#		--create-output-variant-index false
-		#-filter "SOR > 10.0" --filter-name StrandOddsRatio \
-	#	-filter "InbreedingCoeff < -0.8" --filter-name InbreedCoef \
-	#	-filter "ReadPosRankSum < -20.0" --filter-name ReadPosRank \
-	#	-filter "MQRankSum < -12.5" --filter-name MapQualityRankSum \
 
-#	    bgzip $FILTERINDEL
-#	    tabix $FILTERINDEL.gz
-	#fi
-
-	#if [[ ! -f $SELECTINDEL.gz || $FILTERINDEL.gz -nt $SELECTINDEL.gz ]]; then
-	if [[ ! -f $SELECTINDEL.gz || $STEM.$TYPE.vcc.gz -nt $SELECTINDEL.gz ]]; then
-		bcftools filter -e 'QD < 2.0 || FS > 200.0' --threads $CPU -O z -o $SELECTINDEL.gz $STEM.$TYPE.vcf.gz
-	    #gatk SelectVariants -R $REFGENOME \
-	#	--variant $FILTERINDEL.gz \
-	#	--output $SELECTINDEL \
-	#	--exclude-filtered --create-output-variant-index false
-	#    bgzip $SELECTINDEL
-	    tabix $SELECTINDEL.gz
+	if [[ ! -f $SELECTINDEL || $STEM.$TYPE.vcf.gz -nt $SELECTINDEL  ]]; then
+	    bcftools filter -Ob -o $SELECTINDEL -sLowQual -g3 -G10 -e 'QD < 2.0 || FS > 200.0' $STEM.$TYPE.vcf.gz
+	    tabix $SELECTINDEL
+	    bcftools stats $SELECTINDEL > $SELECTINDEL.stats
 	fi
 done
