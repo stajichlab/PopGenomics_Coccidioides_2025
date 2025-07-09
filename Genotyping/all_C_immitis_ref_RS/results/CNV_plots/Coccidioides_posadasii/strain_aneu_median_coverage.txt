@@ -1,0 +1,2 @@
+CHR	Strain	median_depth	chrlen
+6	CA12	2	3458857
