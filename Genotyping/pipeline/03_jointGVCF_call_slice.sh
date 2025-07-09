@@ -1,5 +1,5 @@
-#!/usr/bin/bash
-#SBATCH --mem 24G --nodes 1 --ntasks 4 -J slice.GVCFGeno --out logs/GVCFGenoGATK4.slice_%a.%A.log  -a 1-7
+#!/usr/bin/bash -l
+#SBATCH --mem 24G --nodes 1 --ntasks 4 -p epyc -J slice.GVCFGeno --out logs/GVCFGenoGATK4.slice_%a.%A.log  -a 1-7
 hostname
 MEM=24g
 module unload R
@@ -77,10 +77,12 @@ do
 	    if [ ! -f $GENOVCFOUT ]; then
 		DB=$TEMPDIR/${GVCFFOLDER}_slice_$N
 		rm -rf $DB
-		gatk  --java-options "-Xmx$MEM -Xms$MEM" GenomicsDBImport --consolidate --merge-input-intervals --genomicsdb-workspace-path $DB $FILES $INTERVALS --tmp-dir $TEMPDIR --reader-threads $CPU
-		#--reader-threads $CPU
+		gatk  --java-options "-Xmx$MEM -Xms$MEM" GenomicsDBImport --consolidate --merge-input-intervals --genomicsdb-workspace-path $DB $FILES $INTERVALS --tmp-dir $TEMPDIR --reader-threads $CPU 
 		#gatk  --java-options "-Xmx$MEM -Xms$MEM" GenomicsDBImport --genomicsdb-workspace-path $DB $FILES $INTERVALS  --reader-threads $CPU
-		time gatk GenotypeGVCFs --reference $REFGENOME --output $GENOVCFOUT -V gendb://$DB --tmp-dir $TEMPDIR -G StandardAnnotation -G AS_StandardAnnotation
+		time gatk GenotypeGVCFs --reference $REFGENOME --output $GENOVCFOUT -V gendb://$DB --tmp-dir $TEMPDIR -G StandardAnnotation -G AS_StandardAnnotation 
+
+		#--genomicsdb-use-bcf-codec true
+
 		ls -l $TEMPDIR
 		rm -rf $DB
 	    fi

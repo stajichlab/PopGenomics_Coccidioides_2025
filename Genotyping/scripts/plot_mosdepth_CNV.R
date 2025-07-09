@@ -7,13 +7,16 @@ library(cowplot)
 colors1 <- colorRampPalette(brewer.pal(8, "RdYlBu"))
 manualColors = c("dodgerblue2", "red1", "grey20")
 
-alternating_colors = rep( c("red", "black", "blue", "orange","darkgreen","brown","slategray","purple"), times= 20)
+utils::globalVariables(c("pos", "Depth", "alternating_colors"))
+
+alternating_colors = rep( c("red", "black", "blue", 
+"orange","darkgreen","brown","slategray","purple"), times= 20)
 Prefix = "GG70491" # fixme
 mosdepthdir = "coverage/mosdepth"
-
+sampleinfo = read_csv('samples.csv',col_names=TRUE)
 
 plot_strain <- function(strain, data) {
-	l = subset(data, data$Strain == strain)
+  l = subset(data, data$Strain == strain)
 	Title = sprintf("Chr coverage plot for %s", strain)
 	p <- ggplot(l, aes(x = pos, y = Depth, color = CHR)) +
 		scale_colour_manual(values = alternating_colors) +
@@ -22,6 +25,7 @@ plot_strain <- function(strain, data) {
 		scale_x_continuous(name = "Chromosome",	expand = c(0, 0), breaks = ticks, labels = unique(l$CHR) ) +
 		scale_y_continuous(name = "Normalized Read Depth",expand = c(0, 0), limits = c(0, 3)) +
 		theme_classic()
+  return(p)
 		#+ guides(fill = guide_legend(keywidth = 3,keyheight = 1))
 }
 
@@ -38,10 +42,15 @@ plot_chrs <- function(chrom, data) {
 	#guides(fill = guide_legend(keywidth = 3,keyheight = 1))
 }
 
+for (speciesstr in unique(sampleinfo$Organism) {
 #for (window in windows) {
   window = 10000
+  species = sub(' ','_'speciesstr)
+  species_list = sampleinfo %>%
   inpattern = sprintf(".%sbp.regions.bed.gz$", window)
-  file_list <- list.files(path = mosdepthdir, pattern = inpattern)
+  file_list_all <- list.files(path = mosdepthdir, pattern = inpattern)
+  file_list = species_list %>%  filter(Organism == speciesstr) %>% 
+  
   bedwindows <- data.frame()
   for (i in 1:length(file_list)) {
     infile = sprintf("%s/%s", mosdepthdir, file_list[i])
@@ -74,26 +83,26 @@ plot_chrs <- function(chrom, data) {
 	  filter(chrlen > 100000 ) %>% 
 	  dplyr::mutate_if(is.numeric, round, 2) 
 	
-	write_tsv(covsum_aneu,"CNV_plots/strain_aneu_mean_coverage.txt")	
+	write_tsv(covsum_aneu,sprintf("CNV_plots/%s/strain_aneu_mean_coverage.txt",species))	
 	
 	covsum_aneu <- covsum %>% select(CHR,Strain,median_depth,chrlen) %>% 
-	  filter(median_depth > 1.5 | median_depth < 0.5) %>% 
-	  filter(chrlen > 100000 ) %>% 
-	  dplyr::mutate_if(is.numeric, round, 2)
+  filter(median_depth > 1.5 | median_depth < 0.5) %>% 
+  filter(chrlen > 100000 ) %>% 
+  dplyr::mutate_if(is.numeric, round, 2)
 	
 	write_tsv(covsum_aneu,"CNV_plots/strain_aneu_median_coverage.txt")	
 	Strains_With_Anneuploid = unique(covsum_aneu$Strain)	
 	
 	covsum_wide <- covsum %>%  select(CHR,Strain,mean_depth,chrlen) %>% 
-	  pivot_wider(names_from = Strain, values_from = mean_depth, values_fill = 0) %>% 
-	  arrange(as.numeric(CHR)) %>% dplyr::mutate_if(is.numeric, round, 2) 
+    pivot_wider(names_from = Strain, values_from = mean_depth, values_fill = 0) %>% 
+    arrange(as.numeric(CHR)) %>% dplyr::mutate_if(is.numeric, round, 2)
 	write_tsv(covsum_wide,"CNV_plots/strain_mean_coverage.txt")
 
 	covsum_wide <- covsum %>% select(CHR,Strain,median_depth,chrlen) %>% 
 	  pivot_wider(names_from = Strain, values_from = median_depth, values_fill = 0) %>% 
-	    arrange(as.numeric(CHR)) %>% dplyr::mutate_if(is.numeric, round, 2) 
-	write_tsv(covsum_wide,"CNV_plots/strain_median_coverage.txt")
-	  
+	  arrange(as.numeric(CHR)) %>% dplyr::mutate_if(is.numeric, round, 2)
+write_tsv(covsum_wide,"CNV_plots/strain_median_coverage.txt")
+
 
   d = bedwindows
   d <- d[order(as.numeric(d$CHR), d$Start), ]

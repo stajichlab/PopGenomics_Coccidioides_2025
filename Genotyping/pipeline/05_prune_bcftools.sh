@@ -31,7 +31,7 @@ do
       OUT=$FINALVCF/$PREFIX.$POPNAME.$TYPE.prune_window100.bcf
       QC=$FINALVCF/$PREFIX.$POPNAME.$TYPE.prune_window100.stats
       if [ ! -s $OUT ];  then
-	  bcftools filter -sLowQual -g3 -G10 -Ob $IN | bcftools +prune -w 100bp -n 1 -N 1st -e 'AC==0 || AC==AN || F_MISSING > 0.02' -Ob -o $OUT
+	  bcftools filter -sLowQual -g3 -G10 -Ob -e 'AC==0 || AC==AN || F_MISSING > 0.02' $IN | bcftools +prune -w 100bp -n 1 -N 1st -Ob -o $OUT
      	  tabix $OUT
       fi
       if [[ ! -s $QC || $OUT -nt $QC ]]; then

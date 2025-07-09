@@ -127,7 +127,6 @@ Populations:
     - 574-0_S_OLD_CPA0039
     - 578-1_L_NEW_CPA0049
     - 578-1_A_NEW_CPA0048
-    - C735
     - FMC233
     - FMC234
     - FMC235
@@ -182,13 +181,11 @@ Populations:
     - SA14
     - NACVFR_4542
     - 4545-MICE
-    - CA12
     - 574-1_L_NEW_CPA0040
     - 582-1_L_NEW_CPA0064
     - GT-157
     - J_TORRES
     - TX1
-    - TX13
     - TX3
     - TX4
     - TX5
@@ -264,7 +261,6 @@ Populations:
     - NM_459
     - NM_4708
     - NM_5945
-    - NM_7898
     - VFC083
     - COCSP_8725
     - UTAH_9443
@@ -282,4 +278,3 @@ Populations:
     - SA2
     - SD7
     - SD8
-    - GT-112

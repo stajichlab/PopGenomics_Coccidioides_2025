@@ -31,7 +31,7 @@ do
       OUT=$FINALVCF/$PREFIX.$POPNAME.$TYPE.prune_ld.bcf
       QC=$FINALVCF/$PREFIX.$POPNAME.$TYPE.prune_ld.stats
       if [ ! -s $OUT ];  then
-	 bcftools filter -sLowQual -g3 -G10 -Ob $IN | bcftools +prune -m 0.6 -w 1000 -n 1 -N 1st -Ob -o $OUT
+	 bcftools +prune -m 0.6 -w 1000 -n 1 -N 1st -Ob -o $OUT $IN
      	 tabix $OUT
       fi
       if [[ ! -s $QC || $OUT -nt $QC ]]; then

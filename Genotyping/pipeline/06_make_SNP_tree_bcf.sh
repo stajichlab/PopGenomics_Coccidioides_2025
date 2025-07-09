@@ -60,19 +60,27 @@ for POPNAME in $(yq eval '.Populations | keys' $POPYAML | perl -p -e 's/^\s*\-\s
 do
   for TYPE in SNP
   do
-    root=$FINALVCF/$PREFIX.$POPNAME.$TYPE.prune_window100.bcf
-    FAS=$TREEDIR/$PREFIX.$POPNAME.$TYPE.prune_window100.mfa
-
-    #if [ -f $root.bvcf ]; then
-    #  bgzip $root.vcf
-    #  tabix $root.vcf.gz
-    #fi
+    root=$FINALVCF/$PREFIX.$POPNAME.$TYPE.prune_ld.bcf
+    FAS=$TREEDIR/$PREFIX.$POPNAME.$TYPE.prune_ld.mfa
 
     vcf=$root
     if [[ ! -f $FAS || ${vcf} -nt $FAS ]]; then
-      vcftemp=$SCRATCH/$PREFIX.$POPNAME.$TYPE.prune_w100.bcf
+      vcftemp=$SCRATCH/$PREFIX.$POPNAME.$TYPE.prune_ld.bcf
       # pruning could occur here too
-      bcftools filter --threads $CPU  -Ob -o $vcftemp --SnpGap 3 -e 'QUAL < 1000 || AF=1 || INFO/AF < 0.05' $vcf
+      bcftools filter --threads $CPU  -Ob -o $vcftemp --SnpGap 3 -e 'QUAL < 1000 || AF=1' $vcf
+      bcftools index $vcftemp
+      # no ref genome alleles
+      printf ">%s\n%s\n" $REFNAME $(bcftools query -f '%REF' $vcftemp | tr -d '\n') > $FAS
+      parallel -j $CPU print_fas ::: $(bcftools query -l ${vcf}) ::: $vcftemp >> $FAS
+    fi
+
+    root=$FINALVCF/$PREFIX.$POPNAME.$TYPE.prune_window100.bcf
+    FAS=$TREEDIR/$PREFIX.$POPNAME.$TYPE.prune_window100.mfa
+    vcf=$root
+    if [[ ! -f $FAS || ${vcf} -nt $FAS ]]; then
+      vcftemp=$SCRATCH/$PREFIX.$POPNAME.$TYPE.prune_window100.bcf
+      # pruning could occur here too
+      bcftools filter --threads $CPU  -Ob -o $vcftemp --SnpGap 3 -e 'QUAL < 1000 || AF=1' $vcf
       bcftools index $vcftemp
       # no ref genome alleles
       printf ">%s\n%s\n" $REFNAME $(bcftools query -f '%REF' $vcftemp | tr -d '\n') > $FAS
