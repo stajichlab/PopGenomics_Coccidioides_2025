@@ -286,7 +286,6 @@ COCSP-5740LOLDCPA0038-uu-CL-USA-xxxx-037-BB_S78_L004,574-0_L_OLD_CPA0038,,,,,Coc
 COCSP-5740SOLDCPA0039-uu-CL-USA-xxxx-037-BB_S1_L006,574-0_S_OLD_CPA0039,,,,,Coccidioides posadasii,_R[12]_001.fastq.gz
 COCSP-5781LNEWCPA0049-uu-CL-USA-xxxx-037-BB_S83_L005,578-1_L_NEW_CPA0049,,,,,Coccidioides posadasii,_R[12]_001.fastq.gz
 COCSP-5781S-uu-CL-USA-xxxx-037-BB_S84_L005,578-1_A_NEW_CPA0048,,,,,Coccidioides posadasii,_R[12]_001.fastq.gz
-COCSP-C735-xx-CL-USA-xxxx-037-xx_S1,C735,,,,,Coccidioides posadasii,_R[12]_001.fastq.gz
 COCSP-FMC233-xx-CL-USA-xxxx-037-BB_S78,FMC233,,,,,Coccidioides posadasii,_R[12]_001.fastq.gz
 COCSP-FMC234-xx-CL-USA-xxxx-037-BB_S74,FMC234,,,,,Coccidioides posadasii,_R[12]_001.fastq.gz
 COCSP-FMC235-xx-CL-USA-xxxx-037-BB_S76,FMC235,,,,,Coccidioides posadasii,_R[12]_001.fastq.gz
@@ -342,7 +341,7 @@ NACVFR_Cocci_4542_S73_L007,NACVFR_4542,SAMN08706844,NAU,SRX3786965,PRJNA438145,C
 NACVFR_Cocci_4545PASSAGEBYMICE_S50_L005,4545-MICE,SAMN08706843,NAU,SRX3786968,PRJNA438145,Coccidioides posadasii,_R[12]_001.fastq.gz
 NACVFR_Cocci_CA12_S86_L008,CA12,,,,,Coccidioides posadasii,_R[12]_001.fastq.gz
 NACVFR_Cocci_CPA40_S42_L004,574-1_L_NEW_CPA0040,,,,,Coccidioides posadasii,_R[12]_001.fastq.gz
-NACVFR_Cocci_CPA49_S3_L001,578-1_L_NEW_CPA0049,,,,,Coccidioides posadasii,_R[12]_001.fastq.gz
+NACVFR_Cocci_CPA49_S3_L001,578-1_L_NEW_CPA0049_alt,,,,,Coccidioides posadasii,_R[12]_001.fastq.gz
 NACVFR_Cocci_CPA64_S74_L007,582-1_L_NEW_CPA0064,,,,,Coccidioides posadasii,_R[12]_001.fastq.gz
 NACVFR_Cocci_GT157_S27_L003,GT-157,,,,,Coccidioides posadasii,_R[12]_001.fastq.gz
 NACVFR_Cocci_J_TORRES_S77_L007,J_TORRES,SAMN08706848,NAU,SRX3786961,PRJNA438145,Coccidioides posadasii,_R[12]_001.fastq.gz
@@ -443,4 +442,3 @@ NACVFR_Cocci_3700_S62_L006,SA2,,,,,Coccidioides posadasii,_R[12]_001.fastq.gz
 NACVFR_Cocci_3705_S63_L006,SD7,,,,,Coccidioides posadasii,_R[12]_001.fastq.gz
 NACVFR_Cocci_3706_S85_L008,SD8,,,,,Coccidioides posadasii,_R[12]_001.fastq.gz
 NACVFR_Cocci_GT112_S4_L001,GT-112,,,,,Coccidioides posadasii,_R[12]_001.fastq.gz
-
