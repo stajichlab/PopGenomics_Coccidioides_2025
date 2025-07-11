@@ -19,6 +19,6 @@ DICT=$(dirname $FASTAFILE)/$(basename $FASTAFILE .fasta)".dict"
 if [[ ! -f $DICT || $FASTAFILE -nt $DICT ]]; then
 	rm -f $DICT
 	samtools dict $FASTAFILE > $DICT
-	ln -s $DICT $FASTAFILE.dict 
+	ln -s $(basename $DICT) $FASTAFILE.dict 
 fi
 #grep ">" $FASTAFILE | perl -p -e 's/>(scaffold_(\d+))/>$1,$2/' > $(dirname $FASTAFILE)/chrom_nums.csv
