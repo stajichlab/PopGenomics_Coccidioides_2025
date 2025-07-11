@@ -39,7 +39,11 @@ tail -n +2 $SAMPFILE | sed -n ${N}p | while read RUNACC STRAIN BIOSAMPLE CENTER 
 do
     # for this project has only a single file base  but this needs fixing otherse
     FINALFILE=$ALNFOLDER/$STRAIN.$HTCEXT
-    jellyfish count -C -m $KMER -s $JELLYFISHSIZE -t $CPU -o $SCRATCH/$STRAIN.jf <(samtools fastq -F 4 --threads 4 $FINALFILE)
+    jellyfish count -C -m $KMER -s $JELLYFISHSIZE -t $CPU -o $SCRATCH/$STRAIN.jf <(samtools fastq --reference $REFGENOME -F 4 --threads 4 $FINALFILE)
     jellyfish histo -t $CPU $SCRATCH/$STRAIN.jf > $GENOMESCOPE/$STRAIN.histo
     Rscript scripts/genomescope.R $GENOMESCOPE/$STRAIN.histo $KMER $READLEN $GENOMESCOPE/$STRAIN/
+
+    jellyfish count -C -m $KMER -s $JELLYFISHSIZE -t $CPU -o $SCRATCH/$STRAIN.allreads.jf <(samtools fastq --reference $REFGENOME --threads 4 $FINALFILE)
+    jellyfish histo -t $CPU $SCRATCH/$STRAIN.allreads.jf > $GENOMESCOPE/$STRAIN.allreads.histo
+    Rscript scripts/genomescope.R $GENOMESCOPE/$STRAIN.allreads.histo $KMER $READLEN $GENOMESCOPE/$STRAIN.allreads/
 done
