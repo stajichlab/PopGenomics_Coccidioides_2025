@@ -481,7 +481,6 @@ Populations:
     - B14135
     - B14286
     - B14288
-    - B14291
     - B14298
     - B15142
     - B15145
@@ -529,7 +528,6 @@ Populations:
     - GT-107
     - GT-108
     - GT-109
-    - GT-110
     - GT-111
     - GT-113
     - GT-114
@@ -558,34 +556,26 @@ Populations:
     - h5384
     - M204
     - Michoacan_2
+    - M153
+    - NM_3894
     - RS
     - San_Diego_1
+    - SD7
+    - SD8
     - SDVA1
-    - SDVA10
-    - SDVA14
     - SDVA15
-    - SDVA16
     - SDVA17
     - SDVA2
-    - SDVA20
-    - SDVA25
-    - SDVA26
-    - SDVA27
     - SDVA3
     - SDVA36
     - SDVA38
     - SDVA39
     - SDVA4
     - SDVA41
-    - SDVA42
     - SDVA44
-    - SDVA45
-    - SDVA47
     - SDVA48
     - SDVA5
     - SDVA6
-    - SDVA7
-    - SDVA8
     - SJV_1
     - SJV_10
     - SJV_11
@@ -604,6 +594,7 @@ Populations:
     - Washington_1
 
   Cposadasii:
+    - B14291
     - B0858-Guatemala
     - B10757_Nevada
     - B10813_Texas
@@ -712,7 +703,6 @@ Populations:
     - COCPO_195881
     - COCPO_195884
     - COCPO_Galgiani
-    - M153
     - VFC084_CPA0067
     - VFC085_CPA0068
     - COCPO_34698
@@ -741,6 +731,7 @@ Populations:
     - GT-102
     - GT-103
     - GT-106
+    - GT-110
     - GT-115
     - GT-120
     - GT-130
@@ -856,7 +847,6 @@ Populations:
     - VFC091
     - VFC092
     - VFC093
-    - NM_3894
     - NM_3957
     - NM_4233
     - NM_4297
@@ -878,5 +868,13 @@ Populations:
     - M1_5
     - UTAH_350355
     - SA2
-    - SD7
-    - SD8
+    - SDVA10
+    - SDVA14
+    - SDVA16
+    - SDVA20
+    - SDVA25
+    - SDVA26
+    - SDVA42
+    - SDVA45
+    - SDVA7
+    - SDVA8

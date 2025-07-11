@@ -1,6 +1,7 @@
 Populations:
 
   All:
+    - B14291
     - B0858-Guatemala
     - B10757_Nevada
     - B10813_Texas
@@ -109,7 +110,6 @@ Populations:
     - COCPO_195881
     - COCPO_195884
     - COCPO_Galgiani
-    - M153
     - VFC084_CPA0067
     - VFC085_CPA0068
     - COCPO_34698
@@ -126,7 +126,6 @@ Populations:
     - 574-0_L_OLD_CPA0038
     - 574-0_S_OLD_CPA0039
     - 578-1_L_NEW_CPA0049
-    - 578-1_L_NEW_CPA0049_alt
     - 578-1_A_NEW_CPA0048
     - FMC233
     - FMC234
@@ -139,6 +138,7 @@ Populations:
     - GT-102
     - GT-103
     - GT-106
+    - GT-110
     - GT-115
     - GT-120
     - GT-130
@@ -254,7 +254,6 @@ Populations:
     - VFC091
     - VFC092
     - VFC093
-    - NM_3894
     - NM_3957
     - NM_4233
     - NM_4297
@@ -276,5 +275,13 @@ Populations:
     - M1_5
     - UTAH_350355
     - SA2
-    - SD7
-    - SD8
+    - SDVA10
+    - SDVA14
+    - SDVA16
+    - SDVA20
+    - SDVA25
+    - SDVA26
+    - SDVA42
+    - SDVA45
+    - SDVA7
+    - SDVA8

@@ -41,7 +41,6 @@ Populations:
     - B14135
     - B14286
     - B14288
-    - B14291
     - B14298
     - B15142
     - B15145
@@ -58,7 +57,6 @@ Populations:
     - B17567
     - B17635
     - CA1
-    - CA10
     - CA14
     - CA15
     - CA17
@@ -90,7 +88,6 @@ Populations:
     - GT-107
     - GT-108
     - GT-109
-    - GT-110
     - GT-111
     - GT-113
     - GT-114
@@ -119,34 +116,26 @@ Populations:
     - h5384
     - M204
     - Michoacan_2
+    - M153
+    - NM_3894
     - RS
     - San_Diego_1
+    - SD7
+    - SD8
     - SDVA1
-    - SDVA10
-    - SDVA14
     - SDVA15
-    - SDVA16
     - SDVA17
     - SDVA2
-    - SDVA20
-    - SDVA25
-    - SDVA26
-    - SDVA27
     - SDVA3
     - SDVA36
     - SDVA38
     - SDVA39
     - SDVA4
     - SDVA41
-    - SDVA42
     - SDVA44
-    - SDVA45
-    - SDVA47
     - SDVA48
     - SDVA5
     - SDVA6
-    - SDVA7
-    - SDVA8
     - SJV_1
     - SJV_10
     - SJV_11
