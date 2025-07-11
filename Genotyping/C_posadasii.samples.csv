@@ -1,4 +1,17 @@
 RunAcc,Strain,BioSample,Center,Experiment,Project,Organism,FileBase
+NACVFR_Cocci_GT110_S44_L004,GT-110,,TGEN-NORTH,,,Coccidioides posadasii,_R[12]_001.fastq.gz
+COCSP-SDVA10-xx-xx-USA-0000-037-BB_S29,SDVA10,,TGEN-NORTH,,,Coccidioides posadasii,_R[12]_001.fastq.gz
+COCSP-SDVA14-xx-xx-USA-0000-037-BB_S30,SDVA14,,TGEN-NORTH,,,Coccidioides posadasii,_R[12]_001.fastq.gz
+COCSP-SDVA16-xx-xx-USA-0000-037-BB_S31,SDVA16,,TGEN-NORTH,,,Coccidioides posadasii,_R[12]_001.fastq.gz
+COCSP-SDVA20-xx-xx-USA-0000-037-BB_S33,SDVA20,,TGEN-NORTH,,,Coccidioides posadasii,_R[12]_001.fastq.gz
+COCSP-SDVA25-xx-xx-USA-0000-037-BB_S34,SDVA25,,TGEN-NORTH,,,Coccidioides posadasii,_R[12]_001.fastq.gz
+COCSP-SDVA26-xx-xx-USA-0000-037-BB_S35,SDVA26,,TGEN-NORTH,,,Coccidioides posadasii,_R[12]_001.fastq.gz
+COCSP-SDVA27-xx-xx-USA-0000-037-BB_S36,SDVA27,,TGEN-NORTH,,,Coccidioides posadasii,_R[12]_001.fastq.gz
+COCSP-SDVA42-xx-xx-USA-0000-037-BB_S47,SDVA42,,TGEN-NORTH,,,Coccidioides posadasii,_R[12]_001.fastq.gz
+COCSP-SDVA45-xx-xx-USA-0000-037-BB_S48,SDVA45,,TGEN-NORTH,,,Coccidioides posadasii,_R[12]_001.fastq.gz
+COCSP-SDVA47-xx-xx-USA-0000-037-BB_S49,SDVA47,,TGEN-NORTH,,,Coccidioides posadasii,_R[12]_001.fastq.gz
+COCSP-SDVA7-xx-xx-USA-0000-037-BB_S28,SDVA7,,TGEN-NORTH,,,Coccidioides posadasii,_R[12]_001.fastq.gz
+COCSP-SDVA8-xx-xx-USA-0000-037-BB_S41,SDVA8,,TGEN-NORTH,,,Coccidioides posadasii,_R[12]_001.fastq.gz
 B0858-Guatemala_S2_L001,B0858-Guatemala,SAMN04901279,TGEN-NORTH,SRX1737517,PRJNA274372,Coccidioides posadasii,_R[12]_001.fastq.gz
 B10757-Nevada_S5_L001,B10757_Nevada,SAMN04901280,TGEN-NORTH,SRX1737518,PRJNA274372,Coccidioides posadasii,_R[12]_001.fastq.gz
 B10813-Texas_S6_L001,B10813_Texas,SAMN04901281,TGEN-NORTH,SRX1737519,PRJNA274372,Coccidioides posadasii,_R[12]_001.fastq.gz
@@ -106,7 +119,6 @@ COCPO-195880-FRA-CL-ARG-2018-037-BB_S24,COCPO_195880,,,,,Coccidioides posadasii,
 COCPO-195881-AM-CL-ARG-2018-037-BB_S25,COCPO_195881,,,,,Coccidioides posadasii,_R[12]_001.fastq.gz
 COCPO-195884-HM199398-CL-ARG-0000-037-BB_S26,COCPO_195884,,,,,Coccidioides posadasii,_R[12]_001.fastq.gz
 COCPO-Galgiani-xx-xx-xxx-0000-037-BB_S20,COCPO_Galgiani,,,,,Coccidioides posadasii,_R[12]_001.fastq.gz
-COCPO-M153-xx-CL-MEX-0-037-BB_S7,M153,,,,,Coccidioides posadasii,_R[12]_001.fastq.gz
 COCSP-2028CPA67-uu-CL-USA-xxxx-037-BB_S30_L007,VFC084_CPA0067,,,,,Coccidioides posadasii,_R[12]_001.fastq.gz
 COCSP-2927CPA68-uu-CL-USA-xxxx-037-BB_S98_L005,VFC085_CPA0068,,,,,Coccidioides posadasii,_R[12]_001.fastq.gz
 COCSP-34698-uu-CL-VEN-xxxx-037-BB_S50_L003,COCPO_34698,SAMN08706845,NAU,SRX3786966,PRJNA438145,Coccidioides posadasii,_R[12]_001.fastq.gz
@@ -116,7 +128,6 @@ COCSP-409B0LOLDCPA0011-uu-CL-USA-xxxx-037-BB_S79_L004,409B-0_L_OLD_CPA0011,,,,,C
 COCSP-409B0SOLDCPA0012-uu-CL-USA-xxxx-037-BB_S76_L004,409B-0_S_OLD_CPA0012,,,,,Coccidioides posadasii,_R[12]_001.fastq.gz
 COCSP-4545-uu-CL-VEN-xxxx-037-BB_S51_L003,COCPO_4545,SAMN08706842,NAU,SRX3786967,PRJNA438145,Coccidioides posadasii,_R[12]_001.fastq.gz
 COCSP-485B00SCPA21-uu-CL-USA-xxxx-037-BB_S70_L004,485B-0_S_OLD_CPA0021,,,,,Coccidioides posadasii,_R[12]_001.fastq.gz
-COCSP-485B1LCPA23-uu-CL-USA-xxxx-037-BB_S75_L004,485B-1_L_OLD_CPA0023,,,,,Coccidioides posadasii,_R[12]_001.fastq.gz
 COCSP-485B1SCPA29-uu-CL-USA-xxxx-037-BB_S74_L004,485B-4_S_NEW_CPA0029,,,,,Coccidioides posadasii,_R[12]_001.fastq.gz
 COCSP-5731LNEWCPA0031-uu-CL-USA-xxxx-037-BB_S80_L004,573-1_L_NEW_CPA0031,,,,,Coccidioides posadasii,_R[12]_001.fastq.gz
 COCSP-5731S-uu-CL-USA-xxxx-037-BB_S81_L005,573-1_S_NEW_CPA0033,,,,,Coccidioides posadasii,_R[12]_001.fastq.gz
@@ -132,7 +143,6 @@ COCSP-FMC588-xx-CL-USA-xxxx-037-BB_S77,FMC588,,,,,Coccidioides posadasii,_R[12]_
 COCSP-FMC718-xx-CL-USA-xxxx-037-BB_S80,FMC718,,,,,Coccidioides posadasii,_R[12]_001.fastq.gz
 COCSP-FMC778-xx-CL-USA-xxxx-037-xx_S5,FMC778,,,,,Coccidioides posadasii,_R[12]_001.fastq.gz
 COCSP-GT101-uu-CL-USA-xxxx-037-BB_S52_L003,GT-101,,TGEN-NORTH,,,Coccidioides posadasii,_R[12]_001.fastq.gz
-COCSP-GT102-uu-CL-USA-xxxx-037-BB_S21_L007,GT-102,,TGEN-NORTH,,,Coccidioides posadasii,_R[12]_001.fastq.gz
 COCSP-GT103-uu-CL-USA-xxxx-037-BB_S53_L003,GT-103,,TGEN-NORTH,,,Coccidioides posadasii,_R[12]_001.fastq.gz
 COCSP-GT106-uu-CL-USA-xxxx-037-BB_S56_L003,GT-106,,TGEN-NORTH,,,Coccidioides posadasii,_R[12]_001.fastq.gz
 COCSP-GT115-uu-CL-USA-xxxx-037-BB_S60_L003,GT-115,,TGEN-NORTH,,,Coccidioides posadasii,_R[12]_001.fastq.gz
@@ -236,6 +246,7 @@ SRR21295064,B11232,SAMN30559919,CDC,SRX17304167,PRJNA472535,Coccidioides posadas
 SRR21295065,B11199,SAMN30559918,CDC,SRX17304166,PRJNA472536,Coccidioides posadasii,_[12].fastq.gz
 SRR21295066,B11058,SAMN30559917,CDC,SRX17304165,PRJNA472537,Coccidioides posadasii,_[12].fastq.gz
 SRR21295068,B10919,SAMN30559915,CDC,SRX17304163,PRJNA472538,Coccidioides posadasii,_[12].fastq.gz
+SRR3468073,Tucson_24,SAMN04901284,TGEN-NORTH,SRX1737523,PRJNA274372,Coccidioides posadasii,_[12].fastq.gz
 SRR7586647,Beeville,SAMN09708905,NAU,SRX4452399,PRJNA438145,Coccidioides posadasii,_[12].fastq.gz
 TGC0648_S2_L001,Nuevo_Leon_1,SAMN04901276,TGEN-NORTH,SRX1737514,PRJNA274372,Coccidioides posadasii,_R[12]_001.fastq.gz
 TGC0649_S3_L001,Nuevo_Leon_2,SAMN04901277,TGEN-NORTH,SRX1737515,PRJNA274372,Coccidioides posadasii,_R[12]_001.fastq.gz
@@ -276,7 +287,4 @@ NACVFR_Cocci_3478_S48_L005,COCSP-3478,,,,,Coccidioides posadasii,_R[12]_001.fast
 NACVFR_Cocci_3488_S60_L006,M1_5,,,,,Coccidioides posadasii,_R[12]_001.fastq.gz
 NACVFR_Cocci_350355_S37_L004,UTAH_350355,,,,,Coccidioides posadasii,_R[12]_001.fastq.gz
 NACVFR_Cocci_3700_S62_L006,SA2,,,,,Coccidioides posadasii,_R[12]_001.fastq.gz
-NACVFR_Cocci_3705_S63_L006,SD7,,,,,Coccidioides posadasii,_R[12]_001.fastq.gz
-NACVFR_Cocci_3706_S85_L008,SD8,,,,,Coccidioides posadasii,_R[12]_001.fastq.gz
 NACVFR_Cocci_GT112_S4_L001,GT-112,,,,,Coccidioides posadasii,_R[12]_001.fastq.gz
-SRR3468073,Tucson_24,SAMN04901284,TGEN-NORTH,SRX1737523,PRJNA274372,Coccidioides posadasii,_[12].fastq.gz
