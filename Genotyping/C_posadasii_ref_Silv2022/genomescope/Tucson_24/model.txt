@@ -21,5 +21,5 @@ Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’
 Residual standard error: 1154 on 8314 degrees of freedom
 
 Number of iterations to convergence: 7 
-Achieved convergence tolerance: 2.411e-06
+Achieved convergence tolerance: 2.335e-06
 

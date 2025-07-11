@@ -9,17 +9,17 @@ Formula: y ~ (((2 * (1 - d) * (1 - (1 - r)^k)) + (2 * d * (1 - (1 - r)^k)^2) +
     4/bias, mu = kmercov * 4) * length)
 
 Parameters:
-         Estimate Std. Error t value Pr(>|t|)    
-d       1.426e-02  1.375e-04   103.6   <2e-16 ***
-r       4.801e-04  4.684e-06   102.5   <2e-16 ***
-kmercov 1.446e+01  6.409e-04 22563.4   <2e-16 ***
-bias    6.219e-01  6.936e-04   896.6   <2e-16 ***
-length  2.498e+07  4.421e+03  5651.1   <2e-16 ***
+         Estimate Std. Error  t value Pr(>|t|)    
+d       1.421e-02  1.460e-04    97.35   <2e-16 ***
+r       4.623e-04  3.128e-06   147.82   <2e-16 ***
+kmercov 1.446e+01  6.504e-04 22235.06   <2e-16 ***
+bias    6.218e-01  6.648e-04   935.28   <2e-16 ***
+length  2.510e+07  4.726e+03  5311.65   <2e-16 ***
 ---
 Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1
 
-Residual standard error: 566.9 on 2975 degrees of freedom
+Residual standard error: 606.7 on 2931 degrees of freedom
 
 Number of iterations to convergence: 4 
-Achieved convergence tolerance: 7.353e-06
+Achieved convergence tolerance: 6.702e-06
 
