@@ -1,4 +1,5 @@
 RunAcc,Strain,BioSample,Center,Experiment,Project,Organism,FileBase
+SRR21204697,B14291,SAMN30501277,CDC,SRX17215502,PRJNA472487,Coccidioides posadasii,_[12].fastq.gz
 NACVFR_Cocci_GT110_S44_L004,GT-110,,TGEN-NORTH,,,Coccidioides posadasii,_R[12]_001.fastq.gz
 COCSP-SDVA10-xx-xx-USA-0000-037-BB_S29,SDVA10,,TGEN-NORTH,,,Coccidioides posadasii,_R[12]_001.fastq.gz
 COCSP-SDVA14-xx-xx-USA-0000-037-BB_S30,SDVA14,,TGEN-NORTH,,,Coccidioides posadasii,_R[12]_001.fastq.gz
