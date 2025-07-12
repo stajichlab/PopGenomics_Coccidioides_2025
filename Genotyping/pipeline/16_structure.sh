@@ -37,5 +37,5 @@ do
 	chooseK.py --input=$OUT/$PREFIX.$POPNAME.$TYPE
     done
 done
-
+pigz -kf $OUT/*.meanQ
 Rscript scripts/plot_distruct.R
