@@ -1,0 +1,33 @@
+PLINK v1.90b6.25 64-bit (5 Mar 2022)
+Options in effect:
+  --allow-extra-chr
+  --bcf vcf/CposaSil2022_v1.All.SNP.prune_ld.bcf
+  --const-fid
+  --keep-allele-order
+  --make-bed
+  --out structure/CposaSil2022_v1.All.SNP.prune_ld
+  --vcf-idspace-to _
+
+Hostname: r24
+Working directory: /bigdata/stajichlab/shared/projects/Population_Genomics/Coccidioides/2025_All_Cocci/Genotyping/all_C_posadasii_ref_Silv2022
+Start time: Mon Jul 14 10:43:36 2025
+
+Random number seed: 1752515016
+1031857 MB RAM detected; reserving 515928 MB for main workspace.
+--bcf: structure/CposaSil2022_v1.All.SNP.prune_ld-temporary.bed +
+structure/CposaSil2022_v1.All.SNP.prune_ld-temporary.bim +
+structure/CposaSil2022_v1.All.SNP.prune_ld-temporary.fam written.
+329 variants loaded from .bim file.
+438 people (0 males, 0 females, 438 ambiguous) loaded from .fam.
+Ambiguous sex IDs written to structure/CposaSil2022_v1.All.SNP.prune_ld.nosex .
+Using 1 thread (no multithreaded calculations invoked).
+Before main variant filters, 438 founders and 0 nonfounders present.
+Calculating allele frequencies... done.
+Total genotyping rate is 0.861945.
+329 variants and 438 people pass filters and QC.
+Note: No phenotypes present.
+--make-bed to structure/CposaSil2022_v1.All.SNP.prune_ld.bed +
+structure/CposaSil2022_v1.All.SNP.prune_ld.bim +
+structure/CposaSil2022_v1.All.SNP.prune_ld.fam ... done.
+
+End time: Mon Jul 14 10:43:36 2025
