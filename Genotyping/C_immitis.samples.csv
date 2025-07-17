@@ -1,10 +1,8 @@
 RunAcc,Strain,BioSample,Center,Experiment,Project,Organism,FileBase
-COCSP-2006-xx-CL-USA-xxxx-038-BB_S39_L008,COCSP-2006,,TGEN-NORTH,,,Coccidioides immitis,_R[12]_001.fastq.gz
-COCSP-3505-uu-CL-USA-xxxx-037-BB_S36_L007,COCSP-3505,,TGEN-NORTH,,,Coccidioides immitis,_R[12]_001.fastq.gz
-COCSP-8945-xx-CL-USA-xxxx-037-xx_S17,COCSP-8945,,TGEN-NORTH,,,Coccidioides immitis,_R[12]_001.fastq.gz
 NACVFR_Cocci_3377_S84_L008,1M0,,TGEN-NORTH,,,Coccidioides immitis,_R[12]_001.fastq.gz
 NACVFR_Cocci_2395_S23_L003,21SD,,TGEN-NORTH,,,Coccidioides immitis,_R[12]_001.fastq.gz
 NACVFR_Cocci_3474_S36_L004,3M3,,TGEN-NORTH,,,Coccidioides immitis,_R[12]_001.fastq.gz
+COCSP-485B1LCPA23-uu-CL-USA-xxxx-037-BB_S75_L004,485B-1_L_OLD_CPA0023,,,,,Coccidioides immitis,_R[12]_001.fastq.gz
 NACVFR_Cocci_3475_S59_L006,4M3,,TGEN-NORTH,,,Coccidioides immitis,_R[12]_001.fastq.gz
 NACVFR_Cocci_3698_S38_L004,4SD,,TGEN-NORTH,,,Coccidioides immitis,_R[12]_001.fastq.gz
 NACVFR_Cocci_3703_S39_L004,5SD,,TGEN-NORTH,,,Coccidioides immitis,_R[12]_001.fastq.gz
@@ -81,6 +79,9 @@ Coccidioides-spp-202_S1_L001,CDC-202,SAMN02786851,TGEN-NORTH,SRX547026,PRJNA2459
 Coccidioides-spp-205_S2_L001,CDC-205,SAMN02786852,TGEN-NORTH,SRX547027,PRJNA245906,Coccidioides immitis,_R[12]_001.fastq.gz
 Coccidioides-spp-212_S4_L001,CDC-212,SAMN02786854,TGEN-NORTH,SRX547029,PRJNA245906,Coccidioides immitis,_R[12]_001.fastq.gz
 TGC0654_S2_L001,Coahuila_1,SAMN04901237,TGEN-NORTH,SRX1737471,PRJNA274372,Coccidioides immitis,_R[12]_001.fastq.gz
+COCSP-2006-xx-CL-USA-xxxx-038-BB_S39_L008,COCSP-2006,,TGEN-NORTH,,,Coccidioides immitis,_R[12]_001.fastq.gz
+COCSP-3505-uu-CL-USA-xxxx-037-BB_S36_L007,COCSP-3505,,TGEN-NORTH,,,Coccidioides immitis,_R[12]_001.fastq.gz
+COCSP-8945-xx-CL-USA-xxxx-037-xx_S17,COCSP-8945,,TGEN-NORTH,,,Coccidioides immitis,_R[12]_001.fastq.gz
 Coccidioides_spp_GT-100_ACTTGATG-ACTTGATG_L004,GT-100,,TGEN-NORTH,,,Coccidioides immitis,_R[12]_001.fastq.gz
 COCSP-GT104-uu-CL-USA-xxxx-037-BB_S54_L003,GT-104,,TGEN-NORTH,,,Coccidioides immitis,_R[12]_001.fastq.gz
 COCSP-GT105-uu-CL-USA-xxxx-037-BB_S55_L003,GT-105,,TGEN-NORTH,,,Coccidioides immitis,_R[12]_001.fastq.gz
@@ -113,10 +114,13 @@ COCSP-GT167-uu-CL-USA-xxxx-037-BB_S12_L006,GT-167,,TGEN-NORTH,,,Coccidioides imm
 Coccidioides_spp_GT-169_GGATTAGG-GGATTAGG_L006,GT-169,,TGEN-NORTH,,,Coccidioides immitis,_R[12]_001.fastq.gz
 Coccidioides-immitis-TGC0643_TCATTGAG_L002,Guerrero_1,SAMN04901234,TGEN-NORTH,SRX1737468,PRJNA274372,Coccidioides immitis,_R[12]_001.fastq.gz
 COCSP-h5384-uu-CL-USA-xxxx-037-BB_S28_L007,h5384,SAMN12110397,TGEN-NORTH,,,Coccidioides immitis,_R[12]_001.fastq.gz
+COCPO-M153-xx-CL-MEX-0-037-BB_S7,M153,,,,,Coccidioides immitis,_R[12]_001.fastq.gz
 COCSP-M204-xx-CL-MEX-2015-037-xx_S39,M204,,TGEN-NORTH,,,Coccidioides immitis,_R[12]_001.fastq.gz
 SRR3468020,Michoacan_2,SAMN04901236,TGEN-NORTH,SRX1737470,PRJNA274372,Coccidioides immitis,_[12].fastq.gz
 COCSP-RS-xx-CL-USA-xxxx-037-BB_S40,RS,,TGEN-NORTH,,,Coccidioides immitis,_R[12]_001.fastq.gz
 Coccidioides-immitis-TGC0645_TGTACCTT_L004,San_Diego_1,SAMN04901235,TGEN-NORTH,SRX1737469,PRJNA274372,Coccidioides immitis,_R[12]_001.fastq.gz
+NACVFR_Cocci_3705_S63_L006,SD7,,,,,Coccidioides immitis,_R[12]_001.fastq.gz
+NACVFR_Cocci_3706_S85_L008,SD8,,,,,Coccidioides immitis,_R[12]_001.fastq.gz
 COCSP-SDVA1-xx-xx-USA-0000-037-BB_S24,SDVA1,,TGEN-NORTH,,,Coccidioides immitis,_R[12]_001.fastq.gz
 COCSP-SDVA15-xx-xx-USA-0000-037-BB_S39,SDVA15,,TGEN-NORTH,,,Coccidioides immitis,_R[12]_001.fastq.gz
 COCSP-SDVA17-xx-xx-USA-0000-037-BB_S32,SDVA17,,TGEN-NORTH,,,Coccidioides immitis,_R[12]_001.fastq.gz
@@ -147,7 +151,3 @@ COCSP-VFC0522267-uu-CL-USA-xxxx-037-BB_S71_L004,VFC052,,TGEN-NORTH,,,Coccidioide
 SRR1292227,WA_211,SAMN02786853,TGEN-NORTH,SRX547028,PRJNA245906,Coccidioides immitis,_[12].fastq.gz
 WA221-Washington_S7_L001,WA_221,SAMN30558251,TGEN-NORTH,SRX17301859,PRJNA274372,Coccidioides immitis,_R[12]_001.fastq.gz
 Washington_S3_L001,Washington_1,SAMN02786850,TGEN-NORTH,SRX547025,PRJNA245906,Coccidioides immitis,_R[12]_001.fastq.gz
-COCPO-M153-xx-CL-MEX-0-037-BB_S7,M153,,,,,Coccidioides immitis,_R[12]_001.fastq.gz
-COCSP-485B1LCPA23-uu-CL-USA-xxxx-037-BB_S75_L004,485B-1_L_OLD_CPA0023,,,,,Coccidioides immitis,_R[12]_001.fastq.gz
-NACVFR_Cocci_3705_S63_L006,SD7,,,,,Coccidioides immitis,_R[12]_001.fastq.gz
-NACVFR_Cocci_3706_S85_L008,SD8,,,,,Coccidioides immitis,_R[12]_001.fastq.gz
