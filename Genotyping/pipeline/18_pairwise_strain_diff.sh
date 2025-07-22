@@ -1,5 +1,5 @@
 #!/usr/bin/bash -l
-#SBATCH -p short -N 1 -n 1 -c 96 --mem 8gb --out logs/18_pairiwise_SNPs.log
+#SBATCH -p epyc -N 1 -n 1 -c 64 --mem 64gb --out logs/18_pairiwise_SNPs.log
 
 # this script generates number of SNPs each strain has with the ref
 
@@ -26,6 +26,25 @@ if [[ -z $POPYAML || ! -s $POPYAML ]]; then
 	exit
 fi
 
+pairwise_count() {
+    strain1=$1
+    strain2=$2
+    TYPE=$3
+    IN=$4
+    if [[ "$strain1" != "$strain2" ]]
+    then
+        bcftools view -s $strain1,$strain2 -Ou $IN |
+            bcftools +fill-tags - -Ou -- -t all | \
+            bcftools view --exclude='AC=0' -f 'PASS,.' -Ou | \
+            bcftools query -f '%CHROM\t%POS\t%REF[\t%TGT]\n' -o $SCRATCH/$strain1-$strain2.$TYPE.tsv
+        M=$(./scripts/count_pairwise_vcftab.py --input $SCRATCH/$strain1-$strain2.$TYPE.tsv)
+        echo -e "$strain1\t$strain2\t\t$M"
+        rm -f $SCRATCH/$strain1-$strain2.$TYPE.tsv 
+    fi
+}
+
+export -f pairwise_count
+
 OUTDIR=reports/pairwise_strain_compare
 mkdir -p $OUTDIR
 for POPNAME in $(yq eval '.Populations | keys' $POPYAML | perl -p -e 's/^\s*\-\s*//')
@@ -33,12 +52,11 @@ do
     for TYPE in SNP INDEL
     do
         OUT=$OUTDIR/$PREFIX.$POPNAME.$TYPE.pairwise_count.tsv
-        IN=$FINALVCF/$PREFIX.$POPNAME.$TYPE.combined_selected.vcf.gz
+	BCFILE=$PREFIX.$POPNAME.$TYPE.bcf
+        IN=$FINALVCF/$BCFILE
+	rsync -a $IN $SCRATCH
         echo -e "STRAIN1\tSTRAIN2\tCOUNT" > $OUT
-        parallel -j $CPU if [[ "{1}" != "{2}" ]]\; then bcftools view -s {1},{2} -Ob -o $SCRATCH/{1}-{2}.$TYPE.bcf $IN \; fi ::: $(bcftools query -l $IN | head -n 3) ::: $(bcftools query -l $IN | head -n 3)
-        parallel -j $CPU if [[ "{1}" != "{2}" ]]\; then bcftools +fill-tags $SCRATCH/{1}-{2}.$TYPE.bcf -Ob -o $SCRATCH/{1}-{2}.$TYPE.filltags.bcf -- -t all \; fi ::: $(bcftools query -l $IN | head -n 3) ::: $(bcftools query -l $IN | head -n 3)
-        parallel -j $CPU if [[ "{1}" != "{2}" ]]\; then bcftools view --exclude='AC=0' -f 'PASS,.' -Ob -o $SCRATCH/{1}-{2}.$TYPE.pair.bcf $SCRATCH/{1}-{2}.$TYPE.filltags.bcf \; fi ::: $(bcftools query -l $IN | head -n 3) ::: $(bcftools query -l $IN | head -n 3)
-        parallel -j $CPU if [[ "{1}" != "{2}" ]]\; then bcftools query -f '%CHROM\\t%POS\\t%REF[\\t%TGT]\\n' -o $SCRATCH/{1}-{2}.$TYPE.tsv $SCRATCH/{1}-{2}.$TYPE.pair.bcf \; fi ::: $(bcftools query -l $IN | head -n 3) ::: $(bcftools query -l $IN | head -n 3)
-	parallel -j $CPU if [[ "{1}" != "{2}" ]]\; then M=\$\(./scripts/count_pairwise_vcftab.py --input $SCRATCH/{1}-{2}.$TYPE.tsv\) \; echo -e "{}\\t{}\\t{}\\t\$M" >> \$OUT \; fi ::: $(bcftools query -l $IN | head -n 3) ::: $(bcftools query -l $IN | head -n 3)
+	bcftools query -l $SCRATCH/$BCFILE > $SCRATCH/names.txt
+        parallel -j $CPU pairwise_count ::: $(cat $SCRATCH/names.txt) ::: $(cat $SCRATCH/names.txt) ::: $TYPE ::: $SCRATCH/$BCFILE >> $OUT
     done
 done
