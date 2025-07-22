@@ -1,5 +1,5 @@
 #!/usr/bin/bash -l
-#SBATCH -c 8 --mem 8gb --out logs/structure.log
+#SBATCH -c 8 -N 1 -n 1 --mem 48gb --out logs/structure.log
 
 module load plink
 module load yq
@@ -31,11 +31,20 @@ do
     # create a filtered VCF containing only invariant sites
     for TYPE in SNP
     do
-	BCF=$FINALVCF/$PREFIX.$POPNAME.$TYPE.bcf
-	plink --bcf $BCF --const-fid --allow-extra-chr  --vcf-idspace-to _ --keep-allele-order --make-bed --out $OUT/$PREFIX.$POPNAME.$TYPE
-	parallel -j 8 structure.py -K {} --seed 121 --input=$OUT/$PREFIX.$POPNAME.$TYPE --output=$OUT/$PREFIX.$POPNAME.$TYPE ::: $(seq 8)
-	chooseK.py --input=$OUT/$PREFIX.$POPNAME.$TYPE
+	for WINDOW in prune_window100 prune_ld
+    	do
+	    BCF=$FINALVCF/$PREFIX.$POPNAME.$TYPE.$WINDOW.bcf
+	    if [ ! -f $BCF ]; then 
+		echo "no pruned BCF file did you both of step 5 (05_prune_bcftools.sh) (05_pruneld_bcftools.sh)?"
+		continue
+	    fi
+	    plink --bcf $BCF --const-fid --allow-extra-chr  --vcf-idspace-to _ --keep-allele-order --make-bed \
+		  --out $OUT/$PREFIX.$POPNAME.$TYPE.$WINDOW
+	    parallel -j 8 structure.py -K {} --seed 121 --input=$OUT/$PREFIX.$POPNAME.$TYPE.$WINDOW \
+		     --output=$OUT/$PREFIX.$POPNAME.$TYPE.$WINDOW ::: $(seq 8)
+	    chooseK.py --input=$OUT/$PREFIX.$POPNAME.$TYPE.prune_w100 > $OUT/Kchoice_$PREFIX.$POPNAME.$TYPE.$WINDOW.info
+    	    pigz -kf $OUT/$PREFIX.$POPNAME.$TYPE.$WINDOW.*.meanQ
+    	    Rscript scripts/plot_distruct.R $PREFIX.$POPNAME.$TYPE.$WINDOW $OUT $POPNAME
+    	done
     done
 done
-pigz -kf $OUT/*.meanQ
-Rscript scripts/plot_distruct.R
