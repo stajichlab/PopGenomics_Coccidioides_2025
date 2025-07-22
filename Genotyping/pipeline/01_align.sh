@@ -1,5 +1,6 @@
 #!/usr/bin/bash -l
 #SBATCH -N 1 -c 16 -n 1 --mem 32gb --out logs/bwa.%a.log --time 2:00:00 -a 1-90 -p short
+module load fastp
 module load bwa-mem2
 module load samtools
 module load picard
@@ -22,7 +23,10 @@ fi
 if [ ! -f $REFGENOME.dict ]; then
   echo "NEED a $REFGENOME.dict - make sure 00_index.sh is run"
 fi
-mkdir -p $TMPOUTDIR $ALNFOLDER $UNMAPPED
+if [ -z $QC ]; then
+  QC=logs/qc
+fi
+mkdir -p $TMPOUTDIR $ALNFOLDER $UNMAPPED $QC
 
 CPU=2
 if [ $SLURM_CPUS_ON_NODE ]; then
@@ -68,7 +72,12 @@ do
           if [ -e $PAIR1 ]; then
             if [ ! -f $SRTED ]; then
               # potential switch this to bwa-mem2 for extra speed
-              bwa-mem2 mem -t $CPU -R $READGROUP $REFGENOME $FASTQFOLDER/${BASE}${FILEBASE} > $SCRATCH/${BASE}.sam
+	      LEFT=$(ls $FASTQFOLDER/${BASE}${FILEBASE} | sed -n 1p)
+	      RIGHT=$(ls $FASTQFOLDER/${BASE}${FILEBASE} | sed -n 2p)
+	      fastp -w $CPU -j $QC/${BASE}.json -h $QC/${BASE}.html -g -x -D -o $SCRATCH/${BASE}_1.fq.gz -O $SCRATCH/${BASE}_2.fq.gz \
+		      -i $LEFT -I $RIGHT
+              bwa-mem2 mem -t $CPU -R $READGROUP $REFGENOME $LEFT $RIGHT > $SCRATCH/${BASE}.sam
+              #bwa-mem2 mem -t $CPU -R $READGROUP $REFGENOME $FASTQFOLDER/${BASE}${FILEBASE} > $SCRATCH/${BASE}.sam
               samtools fixmate --threads $CPU -u -O BAM $SCRATCH/${BASE}.sam $SCRATCH/fixmate.bam
               samtools sort --threads $CPU -O BAM -o $SRTED -T $TEMP $SCRATCH/fixmate.bam
             fi
