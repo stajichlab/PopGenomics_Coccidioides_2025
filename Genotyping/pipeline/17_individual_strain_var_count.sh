@@ -1,5 +1,5 @@
 #!/usr/bin/bash -l
-#SBATCH -p short -N 1 -n 1 -c 8 --mem 8gb --out logs/17_strainwise_SNPs.log
+#SBATCH -p short -N 1 -n 1 -c 96 --mem 64gb --out logs/17_strainwise_SNPs.log
 
 # this script generates number of SNPs each strain has with the ref
 
@@ -26,6 +26,18 @@ if [[ -z $POPYAML || ! -s $POPYAML ]]; then
 	exit
 fi
 
+count_snps() {
+    strain=$1
+    IN=$2
+    INCPU=2
+    bcftools view --threads $INCPU -s $strain -Ou $IN |
+        bcftools +fill-tags --threads $INCPU - -Ob -o $SCRATCH/$strain.tags.bcf  -- -t all
+    # %CHROM\t%POS\t%REF\t%ALT[\t%SAMPLE=%GT]
+    count=$(bcftools query -f '%CHROM\t%POS\n' -e "AF!=1 | FILTER!='PASS'" $SCRATCH/$strain.tags.bcf | wc -l)
+    echo -e "$strain\t$count"
+}
+
+export -f count_snps
 OUTDIR=reports/individual_strain_compare
 mkdir -p $OUTDIR
 for POPNAME in $(yq eval '.Populations | keys' $POPYAML | perl -p -e 's/^\s*\-\s*//')
@@ -35,12 +47,7 @@ do
         OUT=$OUTDIR/$PREFIX.$POPNAME.$TYPE.count.tsv
         IN=$FINALVCF/$PREFIX.$POPNAME.$TYPE.bcf
         echo -e "STRAIN\tCOUNT" > $OUT
-        for strain in $(bcftools query -l $IN)
-        do
-            bcftools view --threads $CPU -s $strain -Ob -o $SCRATCH/$strain.bcf $IN
-            bcftools +fill-tags $SCRATCH/$strain.bcf -Ob -o $SCRATCH/$strain.tags.bcf -- -t all
-            count=$(bcftools view -e "AF=0" $SCRATCH/$strain.tags.bcf | grep -c PASS)
-            echo -e "$strain\t$count"
-        done >> $OUT
+        parallel -j $CPU count_snps ::: $(bcftools query -l $IN) ::: $IN | sort >> $OUT
+        rm -f $SCRATCH/*.bcf
     done
 done
