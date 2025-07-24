@@ -32,7 +32,7 @@ DB2NAME=$(basename $DB2)
 IFS=,
 OUTSEARCH=results/mmseqs2_unmapped
 mkdir -p $OUTSEARCH
-tail -n +2 $SAMPFILE | sed -n ${N}p | while read RUNACC STRAIN BIOSAMPLE CENTER EXPERIMENT PROJECT ORGANISM FILEBASE
+tail -n +2 $SAMPFILE | sed -n ${N}p | while read RUNACC STRAIN BIOSAMPLE CENTER EXPERIMENT PROJECT ORGANISM FILEBASE NOTES
 do
     mkdir -p $OUTSEARCH/$STRAIN
     if [ ! -s $OUTSEARCH/$STRAIN/mmseq_${DB2NAME}_report ]; then
