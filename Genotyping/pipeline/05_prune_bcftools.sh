@@ -25,17 +25,17 @@ fi
 
 for POPNAME in $(yq eval '.Populations | keys' $POPYAML | perl -p -e 's/^\s*\-\s*//')
 do
-  for TYPE in SNP INDEL
-  do
-      IN=$FINALVCF/$PREFIX.$POPNAME.$TYPE.bcf
-      OUT=$FINALVCF/$PREFIX.$POPNAME.$TYPE.prune_window100.bcf
-      QC=$FINALVCF/$PREFIX.$POPNAME.$TYPE.prune_window100.stats
-      if [ ! -s $OUT ];  then
-	  bcftools filter -sLowQual -g3 -G10 -Ob -e 'AC==0 || AC==AN || F_MISSING > 0.02' $IN | bcftools +prune -w 100bp -n 1 -N 1st -Ob -o $OUT
-     	  tabix $OUT
-      fi
-      if [[ ! -s $QC || $OUT -nt $QC ]]; then
-	  bcftools stats $OUT > $QC
-      fi 
-  done
- done
+    for TYPE in SNP INDEL
+    do
+        IN=$FINALVCF/$PREFIX.$POPNAME.$TYPE.bcf
+        OUT=$FINALVCF/$PREFIX.$POPNAME.$TYPE.prune_window100.bcf
+        QC=$FINALVCF/$PREFIX.$POPNAME.$TYPE.prune_window100.stats
+        if [ ! -s $OUT ];  then
+            bcftools filter -sLowQual -g3 -G10 -Ob -e 'AC==0 || AC==AN || F_MISSING > 0.02' $IN | bcftools +prune -w 100bp -n 1 -N 1st -Ob -o $OUT
+            tabix $OUT
+        fi
+        if [[ ! -s $QC || $OUT -nt $QC ]]; the
+            bcftools stats $OUT > $QC
+        fi
+    done
+done
