@@ -22,17 +22,40 @@ clist <- list(
 "wong"=c("#000000","#E69F00","#56B4E9","#009E73","#F0E442","#006699","#D55E00","#CC79A7"),
 "krzywinski"=c("#006E82","#8214A0","#005AC8","#00A0FA","#FA78FA","#14D2DC","#AA0A3C","#FA7850","#0AB45A","#F0F032","#A0FA82","#FAE6BE"))
 
-#group <- read.csv("Rmuc_PopAssigned.csv",header=T,stringsAsFactors = F)
-group <- read_csv("Rmuc_PopAssigned.csv",col_names=TRUE, col_types='ci') %>% mutate(Pop=sprintf("Pop_%d",Pop))
+# rewrite code to do:
+# use these vars below instead of harcoding file names
+# get these vars from config and/or loop through OR provide as cmdline ARG
+PREFIX="Cocciall_v1.All.SNP.prune_w100"
+INDIR="structure"
+Pop="All"
+args = commandArgs(trailingOnly=TRUE)
+# if 0 args will default to those above
+if (length(args) > 3) {
+  stop("One argument for in input file prefix is needed.n", call.=FALSE)
+}  else if (length(args) == 1) {
+  # default output file
+  PREFIX = args[1]
+} else if  (length(args) == 2) {
+  PREFIX = args[1]
+  INDIR = args[2]
+} else if (length(args) == 3 ){
+  PREFIX=args[1]
+  INDIR= args[2]
+  Pop=args[3]
+}
+pdf(sprintf("%s/plots_%s.pdf",INDIR,PREFIX))
+group <- read_csv(sprintf("%s.PopAssigned.csv",Pop),col_names=TRUE, col_types='cc') %>% mutate(Pop=sprintf("%s",Pop))
 onelabsetrep <- as.data.frame(group)
 #colnames(group) <- c("Strain","GroupAssign")
-inds <- read.table("structure/RmucY2510_v1.All.SNP.fam",header=F, stringsAsFactors=F)
+inds <- read.table(sprintf("%s/%s.fam",INDIR,PREFIX),header=F, stringsAsFactors=F)
 
 # read in faststructure results
-ffiles <- list.files(path="structure",pattern="*.meanQ.gz",full.names=T)
+ffiles <- list.files(path=INDIR,pattern=sprintf("%s.*.meanQ.gz",PREFIX),full.names=T)
 flist <- readQ(files=ffiles)
 
 rownames(flist[[1]]) <- (inds$V2)
+flist
+nrow
 if(length(unique(sapply(flist,nrow)))==1) { 
   flist <- lapply(flist,"rownames<-",inds$V2)
 } else {
@@ -40,49 +63,85 @@ if(length(unique(sapply(flist,nrow)))==1) {
 }
 onelabsetrep = group %>% arrange(Strain)
 onelabsetrep = as.data.frame(onelabsetrep)[,2,drop=FALSE]
+onelabsetrep
 class(flist)
 tr1 <- tabulateQ(qlist=flist)
-summariseQ(tr1, writetable=TRUE,exportpath="structure")
+summariseQ(tr1, writetable=TRUE,exportpath=INDIR)
 
-pdf("structure_plots.pdf")
 p1 <- plotQ(flist,
             imgoutput="join",returnplot=T,exportplot=T,linesize=0.8,pointsize=4,
             basesize=8,
             clustercol=clist$shiny,splab=paste0("K=",sapply(flist,ncol)),
-            outputfilename="Rmuc.joinedplot",imgtype="pdf",
+            outputfilename=sprintf("%s.joinedplot",PREFIX),imgtype="pdf",
             useindlab=T,showindlab=T,showlegend=T,sharedindlab=F,
-            width=100, exportpath="structure")
+            width=100, exportpath=INDIR)
 
+p1 <- plotQ(flist[2],returnplot=T,exportplot=T,basesize=10,useindlab=T,showindlab=T,showlegend=T,sharedindlab=T,ordergrp=T,indlabsize=5,
+            clustercol=clist$shiny,
+            grplab=onelabsetrep,grplabsize=5,linesize=0.8,pointsize=2,
+	    outputfilename=sprintf("%s.groupK2",PREFIX), imgtype="pdf",
+            height=20,width=120,exportpath=INDIR)
+
+p1 <- plotQ(flist[3],returnplot=T,exportplot=T,basesize=10,useindlab=T,showindlab=T,showlegend=T,sharedindlab=T,ordergrp=T,indlabsize=5,
+            clustercol=clist$shiny,
+            grplab=onelabsetrep,grplabsize=5,linesize=0.8,pointsize=2,
+	    outputfilename=sprintf("%s.groupK3",PREFIX), imgtype="pdf",
+            height=20,width=100,exportpath=INDIR)
+
+p1 <- plotQ(flist[3],returnplot=T,exportplot=T,basesize=10,useindlab=T,showindlab=T,showlegend=T,sharedindlab=T,ordergrp=T,indlabsize=5,
+            clustercol=clist$shiny,
+            grplab=onelabsetrep,grplabsize=5,linesize=0.8,pointsize=2,outputfilename=sprintf("%s.groupK4",PREFIX), imgtype="pdf",
+            height=20,width=100,exportpath=INDIR)
 
 p1 <- plotQ(flist[6],returnplot=T,exportplot=T,basesize=10,useindlab=T,showindlab=T,showlegend=T,sharedindlab=T,ordergrp=T,indlabsize=5,
             clustercol=clist$shiny,
-            grplab=onelabsetrep,grplabsize=3,linesize=0.8,pointsize=2,outputfilename="Rmuc.combined.groupK6", imgtype="pdf",
-            height=10,width=100,exportpath="structure")
+            grplab=onelabsetrep,grplabsize=3,linesize=0.8,pointsize=2,outputfilename=sprintf("%s.groupK6",PREFIX), imgtype="pdf",
+            height=10,width=100,exportpath=INDIR)
 
 p1 <- plotQ(flist[7],returnplot=T,exportplot=T,basesize=10,useindlab=T,showindlab=T,showlegend=T,sharedindlab=T,ordergrp=T,indlabsize=5,
             clustercol=clist$shiny,
-            grplab=onelabsetrep,grplabsize=3,linesize=0.8,pointsize=2,outputfilename="Rmuc.combined.groupK7", imgtype="pdf",
-            height=10,width=100,exportpath="structure")
+            grplab=onelabsetrep,grplabsize=3,linesize=0.8,pointsize=2,outputfilename=sprintf("%s.groupK7",PREFIX), imgtype="pdf",
+            height=10,width=100,exportpath=INDIR)
 
 p1 <- plotQ(flist[8],returnplot=T,exportplot=T,basesize=10,useindlab=T,showindlab=T,showlegend=T,sharedindlab=T,ordergrp=T,indlabsize=5,
             clustercol=clist$shiny,
-            grplab=onelabsetrep,grplabsize=3,linesize=0.8,pointsize=2,outputfilename="Rmuc.combined.groupK8", imgtype="pdf",
-            height=10,width=100,exportpath="structure")
+            grplab=onelabsetrep,grplabsize=3,linesize=0.8,pointsize=2,outputfilename=sprintf("%s.groupK8",PREFIX), imgtype="pdf",
+            height=10,width=100,exportpath=INDIR)
 
 p1 <- plotQ(flist[c(3:8)],imgoutput="join",returnplot=T,exportplot=T,basesize=9,ordergrp=T,useindlab=T,showindlab=T,showlegend=T,sharedindlab=T,
             clustercol=clist$shiny,
-          grplab=onelabsetrep,grplabsize=4,linesize=0.8,pointsize=2,outputfilename="Rmuc.combined.groups_3-8", imgtype="pdf",exportpath="structure",
+          grplab=onelabsetrep,grplabsize=4,linesize=0.8,pointsize=2,outputfilename=sprintf("%s.groups_3-8",PREFIX), imgtype="pdf",
+	  exportpath=INDIR,
           height=10,width=100)
 
+p <- plotQMultiline(flist[2], returnplot=T,spl=100,useindlab=T,showlegend=T,
+                    clustercol=clist$shiny,
+                    imgtype="pdf",exportplot=T,sortind="Cluster1",grplab=onelabsetrep,grplabsize=2,ordergrp=T,
+                    outputfilename=sprintf("%s.joined_multiline.K_2",PREFIX),exportpath=INDIR)
+
+p <- plotQMultiline(flist[3], returnplot=T,spl=100,useindlab=T,showlegend=T,
+                    clustercol=clist$shiny,
+                    imgtype="pdf",exportplot=T,sortind="Cluster1",grplab=onelabsetrep,grplabsize=2,ordergrp=T,
+                    outputfilename=sprintf("%s.joined_multiline.K_3",PREFIX),exportpath=INDIR)
+
+p <- plotQMultiline(flist[4], returnplot=T,spl=100,useindlab=T,showlegend=T,
+                    clustercol=clist$shiny,
+                    imgtype="pdf",exportplot=T,sortind="Cluster1",grplab=onelabsetrep,grplabsize=2,ordergrp=T,
+                    outputfilename=sprintf("%s.joined_multiline.K_4",PREFIX),exportpath=INDIR)
+p <- plotQMultiline(flist[5], returnplot=T,spl=100,useindlab=T,showlegend=T,
+                    clustercol=clist$shiny,
+                    imgtype="pdf",exportplot=T,sortind="Cluster1",grplab=onelabsetrep,grplabsize=2,ordergrp=T,
+                    outputfilename=sprintf("%s.joined_multiline.K_5",PREFIX),exportpath=INDIR)
 p <- plotQMultiline(flist[6], returnplot=T,spl=100,useindlab=T,showlegend=T,
                     clustercol=clist$shiny,
                     imgtype="pdf",exportplot=T,sortind="Cluster1",grplab=onelabsetrep,grplabsize=2,ordergrp=T,
-                    outputfilename="Rmuc.joined_multiline.K_6",exportpath="structure")
+                    outputfilename=sprintf("%s.joined_multiline.K_6",PREFIX),exportpath=INDIR)
 p <- plotQMultiline(flist[7], returnplot=T,spl=100,useindlab=T,showlegend=T,
                     clustercol=clist$shiny,
                     imgtype="pdf",exportplot=T,sortind="Cluster1",grplab=onelabsetrep,grplabsize=2,ordergrp=T,
-                    outputfilename="Rmuc.joined_multiline.K_7",exportpath="structure")
+                    outputfilename=sprintf("%s.joined_multiline.K_7",PREFIX),exportpath=INDIR)
 p <- plotQMultiline(flist[8], returnplot=T,spl=100,useindlab=T,showlegend=T,
                     clustercol=clist$shiny,
                     imgtype="pdf",exportplot=T,sortind="Cluster1",grplab=onelabsetrep,grplabsize=2,ordergrp=T,
-                    outputfilename="Rmucjoined_multiline.K_8",exportpath="structure")
+                    outputfilename=sprintf("%s.joined_multiline.K_8",PREFIX),exportpath=INDIR)
+

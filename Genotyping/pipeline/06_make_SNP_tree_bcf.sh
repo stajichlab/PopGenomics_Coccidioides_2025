@@ -56,7 +56,7 @@ fasttreerun() {
 export -f print_fas fasttreerun iqtreerun
 TREEDIR=$TREEDIR.bcftools
 mkdir -p $TREEDIR
-for POPNAME in $(yq eval '.Populations | keys' $POPYAML | perl -p -e 's/^\s*\-\s*//' )
+for POPNAME in $(yq eval '.Populations | keys' $POPYAML | grep All | perl -p -e 's/^\s*\-\s*//' )
 do
   for TYPE in SNP
   do
