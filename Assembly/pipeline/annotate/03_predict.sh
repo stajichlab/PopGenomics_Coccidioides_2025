@@ -27,10 +27,10 @@ if [ -z $N ]; then
         exit
     fi
 fi
-MAX=$(wc -l $SAMPFILE | awk '{print $1}')
+MAX=$(wc -l $SAMPLES | awk '{print $1}')
 
 if [ $N -gt $MAX ]; then
-    echo "$N is too big, only $MAX lines in $SAMPFILE"
+    echo "$N is too big, only $MAX lines in $SAMPLES"
     exit
 fi
 
