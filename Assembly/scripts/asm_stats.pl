@@ -20,12 +20,13 @@ my %header_seen;
 my (@mappingrun,@busco_rerun);
 opendir(DIR,$dir) || die $!;
 my $first = 1;
+my $firstMAP = 1;
 foreach my $file ( readdir(DIR) ) {
     next unless ( $file =~ /(\S+)(\.fasta)?\.stats.txt$/);
     my $stem = $1;
     $stem =~ s/\.sorted//;
 	my $stemclean = $stem;
-	$stemclean =~ s/\.AAFTF$//;
+	$stemclean =~ s/\.AAFTF//;
     #warn("$file ($dir)\n");
     open(my $fh => "$dir/$file") || die "cannot open $dir/$file: $!";
     while(<$fh>) {
@@ -75,7 +76,6 @@ foreach my $file ( readdir(DIR) ) {
 		}
 	    } else {
 			warn("Cannot find BUSCO result in $buscosub\n");
-			
 			my $r =	`tail -n +2 $SAMPLES | grep -n $stemclean`;
 			my ($id) = ($r =~ /^(\d+):.+/);
 			push @busco_rerun, $id;
@@ -150,10 +150,11 @@ foreach my $file ( readdir(DIR) ) {
 			if (exists $stats{$stem}->{'TOTAL_LENGTH'} ) {
 				$stats{$stem}->{'Average_Coverage'}  = sprintf("%.1f",$base_count / $stats{$stem}->{'TOTAL_LENGTH'});
 			}
-			if( $first )  {
+			if( $firstMAP )  {
 				push @header, ('Total_Reads',
 						'Mapped_reads',			   
 						'Average_Coverage');
+				$firstMAP = 0;
 			}
 		} else {
 			warn("cannot find $sumstatfile\n");
