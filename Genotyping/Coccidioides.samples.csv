@@ -151,7 +151,7 @@ COCSP-VFC0522267-uu-CL-USA-xxxx-037-BB_S71_L004,VFC052,,TGEN-NORTH,,,Coccidioide
 SRR1292227,WA_211,SAMN02786853,TGEN-NORTH,SRX547028,PRJNA245906,Coccidioides immitis,_[12].fastq.gz,,C937D92
 WA221-Washington_S7_L001,WA_221,SAMN30558251,TGEN-NORTH,SRX17301859,PRJNA274372,Coccidioides immitis,_R[12]_001.fastq.gz,,C4A3E3B
 Washington_S3_L001,Washington_1,SAMN02786850,TGEN-NORTH,SRX547025,PRJNA245906,Coccidioides immitis,_R[12]_001.fastq.gz,,C08B0A4
-COCSP-GT102-uu-CL-USA-xxxx-037-BB_S21_L007,GT-102,,TGEN-NORTH,,,Coccidioides pasadasii,_R[12]_001.fastq.gz,,C09FE22
+COCSP-GT102-uu-CL-USA-xxxx-037-BB_S21_L007,GT-102,,TGEN-NORTH,,,Coccidioides posadasii,_R[12]_001.fastq.gz,,C09FE22
 COCSP-4070SCPA002-uu-CL-USA-xxxx-037-BB_S77_L004,407-0_S_OLD_CPA0002,,,,,Coccidioides posadasii,_R[12]_001.fastq.gz,,C577643
 COCSP-4071SCPA4-uu-CL-USA-xxxx-037-BB_S73_L004,407-1_S_OLD_CPA0004,,,,,Coccidioides posadasii,_R[12]_001.fastq.gz,,CC44035
 COCSP-409B0LOLDCPA0011-uu-CL-USA-xxxx-037-BB_S79_L004,409B-0_L_OLD_CPA0011,,,,,Coccidioides posadasii,_R[12]_001.fastq.gz,,C90261E
@@ -416,7 +416,7 @@ NACVFR_Cocci_TX1_S53_L005,TX1,,,,,Coccidioides posadasii,_R[12]_001.fastq.gz,,C9
 Coccidioides_spp_TX10_TTGCGTAC-TTGCGTAC_L008,TX10,,,,,Coccidioides posadasii,_R[12]_001.fastq.gz,,C4989F4
 Coccidioides_spp_TX11_TGCGTGAA-TGCGTGAA_L006,TX11,,,,,Coccidioides posadasii,_R[12]_001.fastq.gz,,CEC36E2
 Coccidioides_spp_TX12_GTCGCTAT-GTCGCTAT_L007,TX12,,,,,Coccidioides posadasii,_R[12]_001.fastq.gz,,CC2E952
-NACVFR_Cocci_TX13_S29_L003,TX13,,,,,Coccidioides posadasii,_R[12]_001.fastq.gz,TooLow,C0C5B85
+NACVFR_Cocci_TX13_S29_L003,TX13,,,,,Fusarium solani,_R[12]_001.fastq.gz,Not Cocci,C0C5B85
 Coccidioides_spp_TX14_GTCTTGGC-GTCTTGGC_L007,TX14,,,,,Coccidioides posadasii,_R[12]_001.fastq.gz,,CEF4951
 NACVFR_Cocci_2239_S71_L007,TX17,,,,,Coccidioides posadasii,_R[12]_001.fastq.gz,,CFBA040
 Coccidioides_spp_TX2_TGACAGAC-TGACAGAC_L008,TX2,,,,,Coccidioides posadasii,_R[12]_001.fastq.gz,,C022B0B
