@@ -1,14 +1,14 @@
 #!/usr/bin/bash -l
-#SBATCH -p epyc --time 3-0:00:00 --ntasks 32 --nodes 1 --mem 24G --out logs/annotate_predict.%a.log
+#SBATCH --time 3-0:00:00 -c 16 -N 1 -n 1 --mem 16G --out logs/annotate_predict.%a.log
 
 module load funannotate
-
+which augustus
 # this will define $SCRATCH variable if you don't have this on your system you can basically do this depending on
 # where you have temp storage space and fast disks
 module load workspace/scratch
 
 CPU=1
-if [ $SLURM_CPUS_ON_NODE ]; then
+if [ ! -z $SLURM_CPUS_ON_NODE ]; then
     CPU=$SLURM_CPUS_ON_NODE
 fi
 
@@ -42,15 +42,18 @@ SEQCENTER=UCR
 IFS=,
 tail -n +2 $SAMPLES | sed -n ${N}p | while read RUNACC STRAIN BIOSAMPLE CENTER EXPERIMENT PROJECT ORGANISM FILEBASE NOTES LOCUSTAG
 do
-do
-    if [[ "$NOTES" == "Too Low" ]]; then
+    if [[ "$NOTES" == "TooLow" ]]; then
 	echo "skipping $N ($ID) as it is too low coverage ($NOTES)"
 	continue
     fi
-    SPECIESSTRAINNOSPACE=$(echo -n "$SPECIES $STRAIN" | perl -p -e 's/[\(\)\s]+/_/g')
-    SPECIESNOSPACE=$(echo -n "$SPECIES" | perl -p -e 's/[\(\)\s]+/_/g')
-    name=$SPECIESSTRAINNOSPACE
-    MASKED=$INDIR/${name}.AAFTF.masked.fasta
+    if [[ "$NOTES" == "Skip" ]]; then
+	    echo "Skipping $N ($ID) as it was marked to be skipped"
+	    continue
+    fi
+    SPECIESSTRAINNOSPACE=$(echo -n "$ORGANISM" | perl -p -e 's/[\(\)\s]+/_/g')
+    SPECIESNOSPACE=$(echo -n "$ORGANISM" | perl -p -e 's/[\(\)\s]+/_/g')
+    name=$STRAIN
+    MASKED=$INDIR/${name}.masked.fasta
     echo "masked is $MASKED ($INDIR/${name}.masked.fasta)"
     if [ ! -f $MASKED ]; then
         echo "no masked file $MASKED"
@@ -60,6 +63,9 @@ do
 	    LOCUSTAG=$(echo -n $STRAIN | perl -p -e 's/[\s_\.\-]+//g')
     fi
     echo "LOCUS is $LOCUSTAG MASKED is $MASKED"
+    if [[ -f $OUTDIR/${name}/predict_results/${SPECIESNOSPACE}_$STRAIN.proteins.fa && $OUTDIR/${name}/predict_results/${SPECIESNOSPACE}_${STRAIN}.proteins.fa -nt $MASKED ]]; then
+	    echo "Already run prediction step, skipping, to force remove the proteins.fa file"
+    fi
     if [[ -f $OUTDIR/${name}/predict_misc/protein_alignments.gff3 && $MASKED -nt $OUTDIR/${name}/predict_misc/protein_alignments.gff3 ]]; then
 	    echo "$MASKED is newer than $OUTDIR/${name}/predict_misc/protein_alignments.gff3, need to remove existing files to ensure clean re-run"
 	    exit
@@ -76,6 +82,6 @@ do
 		--AUGUSTUS_CONFIG_PATH $AUGUSTUS_CONFIG_PATH \
 		-i $MASKED --name $LOCUSTAG --max_intronlen 1500 \
 		--protein_evidence $FUNANNOTATE_DB/uniprot_sprot.fasta \
-		-s "$SPECIES" -o $OUTDIR/${name}  --tmpdir $SCRATCH
-		#--busco_seed_species $SEED_SPECIES
+		-s "$ORGANISM" -o $OUTDIR/${name}  --tmpdir $SCRATCH \
+		--busco_seed_species $SEED_SPECIES 
 done

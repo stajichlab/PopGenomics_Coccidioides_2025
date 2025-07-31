@@ -46,7 +46,7 @@ do
 		mkdir -p $MASKDIR/${name}
 		GENOME=$(realpath $INDIR/${name}/ragtag.scaffold.fasta)
 		LIBRARY=$RMLIBFOLDER/$SPECIESNOSPACE.repeatmodeler.lib
-	if [[ ! -f $LIBRARY || $INDIR/${name}/ragtag.scaffold.fasta -nt $LIBRARY ]]; then
+	if [[ ! -f $LIBRARY ]]; then
 		echo "cannot find the RepeatModeler library for $SPECIESNOSPACE"
 		exit
 #	    module load RepeatModeler

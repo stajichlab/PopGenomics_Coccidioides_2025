@@ -1,5 +1,5 @@
 #!/usr/bin/bash -l
-#SBATCH --nodes 1 --ntasks 8 --mem 16G --out logs/annotate_antismash.%a.log -J antismash
+#SBATCH -n 1 -N 1 -c 16 --mem 16G --out logs/annotate_antismash.%a.log -J antismash
 
 module load antismash
 which antismash
@@ -28,18 +28,16 @@ fi
 INPUTFOLDER=predict_results
 IFS=,
 tail -n +2 $SAMPLES | sed -n ${N}p | while read RUNACC STRAIN BIOSAMPLE CENTER EXPERIMENT PROJECT ORGANISM FILEBASE NOTES LOCUSTAG
-    if [[ "$NOTES" == "Too Low" ]]; then
+do
+    if [[ "$NOTES" == "TooLow" ]]; then
             echo "skipping $N ($ID) as it is too low coverage ($NOTES)"
             continue
     fi
 
-    SPECIESSTRAINNOSPACE=$(echo -n "$SPECIES $STRAIN" | perl -p -e 's/[\(\)\s]+/_/g')
-    SPECIESNOSPACE=$(echo -n "$SPECIES" | perl -p -e 's/[\(\)\s]+/_/g')
-    name=$SPECIESSTRAINNOSPACE
+    SPECIESNOSPACE=$(echo -n "$ORGANISM" | perl -p -e 's/[\(\)\s]+/_/g')
+    name=$STRAIN
     echo "Species is $SPECIESNOSPACE"
 
-    # previous we were running flye and canu
-    GENOME=$INDIR/${SPECIESSTRAINNOSPACE}.AAFTF.masked.fasta
     if [ ! -d $OUTDIR/$name ]; then
 	    echo "No annotation dir for ${name}"
 	    exit

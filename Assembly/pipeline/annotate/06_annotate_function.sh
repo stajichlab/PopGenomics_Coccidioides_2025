@@ -29,7 +29,7 @@ fi
 INDIR=scaffolded_genomes
 OUTDIR=annotation
 BUSCODB=onygenales_odb10
-SBTTEMPLATE=lib/sbt/cocci_pangenome.sbt
+SBTTEMPLATE=lib/sbt/Cocci.sbt
 IFS=,
 tail -n +2 $SAMPLES | sed -n ${N}p | while read RUNACC STRAIN BIOSAMPLE CENTER EXPERIMENT PROJECT ORGANISM FILEBASE NOTES LOCUSTAG
 do
@@ -41,22 +41,21 @@ do
 	    continue
     fi
 
-    echo "$ID $BASE $SRA $SPECIES $STRAIN"
-    SPECIESSTRAINNOSPACE=$(echo -n "$SPECIES $STRAIN" | perl -p -e 's/[\(\)\s]+/_/g')
-    SPECIESNOSPACE=$(echo -n "$SPECIES" | perl -p -e 's/[\(\)\s]+/_/g')
-    name=$SPECIESSTRAINNOSPACE
-    echo "Species is $SPECIESNOSPACE"
-
-    GENOME=$INDIR/${SPECIESSTRAINNOSPACE}.AAFTF.masked.fasta
+    echo "Species is $ORGANISM"
 
     if [ -z "$LOCUSTAG" ]; then
+	    echo "no LOCUSTAG for $STRAIN"
         LOCUSTAG=$(echo -n $STRAIN | perl -p -e 's/[\s_\.\-]+//g')
     fi
+    name=$STRAIN
+    ANTISMASH=$OUTDIR/$name/antismash_local/$SPECIESNOSPACE.gbk
+    ARGS=()
+    if [[ -d $(dirname $ANTISMASH) && -s $ANTISMASH ]]; then
+	ARGS+=(--antismash $ANTISMASH)
+    fi
 
-    funannotate annotate -i $OUTDIR/${name} --cpus $CPUS  \
-		--species "$SPECIES" --strain $STRAIN --sbt $SBTTEMPLATE \
-	        --busco_db $BUSCODB --rename $LOCUSTAG
-		    #$SBTTEMPLATE/$BASE.sbt \
+    funannotate annotate -i $OUTDIR/${name} --cpus $CPUS --header_length 24 \
+		--species "$ORGANISM" --strain $STRAIN --sbt $SBTTEMPLATE \
+	        --busco_db $BUSCODB --rename $LOCUSTAG "${ARGS[@]}" 
+		   #--rename $LOCUSTAG
 done
-
-

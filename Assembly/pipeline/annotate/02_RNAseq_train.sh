@@ -1,5 +1,5 @@
 #!/bin/bash -l
-#SBATCH -p epyc --time 6-0:00:00 -c 16 -n 1 -N 1 --mem 24G --out logs/annotate_train.%a.log
+#SBATCH -p epyc --time 5-0:00:00 -c 16 -n 1 -N 1 --mem 24G --out logs/annotate_train.%a.log
 
 module load singularity
 HOSTNAME=$(hostname -s)
@@ -27,14 +27,13 @@ cp ~/.pasa/pasa_conf/conf.txt $SCRATCH/conf/pasa-local-${HOSTNAME}.config.txt
 PORT=$(shuf -i3000-4999 -n1)
 
 export SINGULARITY_BINDPATH=$SCRATCH
-export SINGULARITYENV_PASACONF=$SCRATCH/conf/pasa-local-${HOSTNAME}.config.txt
-sed -i "s/^MYSQLSERVER.*$/MYSQLSERVER=${HOSTNAME}:${PORT}/" ${SINGULARITYENV_PASACONF}
+export PASACONF=$SCRATCH/conf/pasa-local-${HOSTNAME}.config.txt
+#export PASACONF=$SINGULARITYENV_PASACONF
+sed -i "s/^MYSQLSERVER.*$/MYSQLSERVER=${HOSTNAME}:${PORT}/" ${PASACONF}
 perl -i -p -e "s/port = \d+/port = ${PORT}/" $SCRATCH/conf/my.cnf
-
 SIF=/bigdata/stajichlab/shared/lib/mariadb/mariadb.sif
 # Start Database
-singularity instance start --writable-tmpfs -B $SCRATCH/db/:/var/lib/mysql,$SCRATCH/conf:/usr/conf $SIF mysqldb$RUNID /usr/bin/mysqld_safe --defaults-file=/usr/conf/my.cnf
-
+singularity instance start --writable-tmpfs -B $SCRATCH/conf/my.cnf:/etc/mysql/my.cnf,$SCRATCH/db/:/var/lib/mysql,$SCRATCH/conf:/usr/conf $SIF mysqldb$RUNID /usr/bin/mysqld_safe
 MEM=24G
 CPU=1
 if [ $SLURM_CPUS_ON_NODE ]; then
@@ -80,7 +79,7 @@ do
     echo "Species is $SPECIESNOSPACE and RNASeq would be $RNAFOLDER/${SPECIESNOSPACE}_R1.fq.gz"
     
     MASKED=$INDIR/${name}.masked.fasta
-    echo "in is $MASKED ($INDIR/${name})"
+    echo "input genome is $MASKED ($INDIR/${name})"
     if [ ! -f $MASKED ]; then
         echo "no masked file $MASKED"
         exit
@@ -110,8 +109,9 @@ do
         echo "already generated alignments but  $MASKED is newer than $ODIR/${name}/training/funannotate_train.pasa.gff3, need to remove and rerun"
         exit
     fi
-    if [ -f $ODIR/${name}/training/funannotate_train.pasa.gff3 ]; then
+    if [[ -f $ODIR/${name}/training/funannotate_train.pasa.gff3 ]]; then
         echo "transcript alignments already generated for $name ($ODIR/${name}/training/trinity.alignments.gff3) ... skipping"
+	continue
     fi
     echo "using $RNAFOLDER/${SPECIESNOSPACE}_R1.fq.gz and $RNAFOLDER/${SPECIESNOSPACE}_R2.fq.gz as input RNAseq"
     
@@ -121,7 +121,7 @@ do
   	        --cpus $CPU --memory ${MEM} --header_length 24 \
   	        --left $RNAFOLDER/${SPECIESNOSPACE}_R1.fq.gz \
 	        --right $RNAFOLDER/${SPECIESNOSPACE}_R2.fq.gz \
-  	        --pasa_db mysql --no-progress --min_coverage 4
+  	        --pasa_db mysql --no-progress --min_coverage 4 
     elif [[ -f $RNAFOLDER/${SPECIESNOSPACE}.fq.gz ]]; then
 	    funannotate train -i $MASKED -o $ODIR/${name} \
    	        --jaccard_clip --species "$SPECIES" --strain $STRAIN \
@@ -134,5 +134,5 @@ do
     fi
 done
 # shutdown the DB
-stop_mysqldb
+#stop_mysqldb
 exit 0
