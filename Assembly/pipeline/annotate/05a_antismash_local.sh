@@ -8,6 +8,7 @@ CPU=1
 if [ ! -z $SLURM_CPUS_ON_NODE ]; then
   CPU=$SLURM_CPUS_ON_NODE
 fi
+echo "running on "$(hostname)" with $CPU cpus"
 OUTDIR=annotation
 SAMPLES=samples.csv
 N=${SLURM_ARRAY_TASK_ID}
