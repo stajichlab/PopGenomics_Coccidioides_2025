@@ -34,12 +34,14 @@ IFS=,
 tail -n +2 $SAMPLES | sed -n ${N}p | while read RUNACC STRAIN BIOSAMPLE CENTER EXPERIMENT PROJECT ORGANISM FILEBASE NOTES LOCUSTAG
 do
     if [[ "$NOTES" == "TooLow" ]]; then
-	    echo "skipping $N ($ID) as it is too low coverage ($NOTES)"
-	    continue
-    elif [[ "$NOTES" == "No RNA" ]]; then
-	    echo "skipping $N ($ID) as no good RNA matches ($NOTES)"
+	echo "skipping $N ($ID) as it is too low coverage ($NOTES)"
+	continue
+    fi
+    if [[ "$NOTES" == "Skip" ]]; then
+	    echo "Skipping $N ($ID) as it was marked to be skipped"
 	    continue
     fi
+    # need to skip Contam too
 
     echo "Species is $ORGANISM"
 

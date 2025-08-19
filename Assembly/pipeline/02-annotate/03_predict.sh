@@ -78,7 +78,7 @@ do
     fi
     time funannotate predict --cpus $CPU --keep_no_stops --SeqCenter $SEQCENTER \
 		--busco_db $BUSCO --header_length 24 \
-		--strain $STRAIN --min_training_models 50 \
+		--strain $STRAIN --min_training_models 40 \
 		--AUGUSTUS_CONFIG_PATH $AUGUSTUS_CONFIG_PATH \
 		-i $MASKED --name $LOCUSTAG --max_intronlen 1500 \
 		--protein_evidence $FUNANNOTATE_DB/uniprot_sprot.fasta \

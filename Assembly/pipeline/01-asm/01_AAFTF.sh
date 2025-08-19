@@ -70,6 +70,9 @@ do
     if [ ! -f $LEFT ]; then
 		if [ ! -f $LEFTTRIM ]; then
 			AAFTF trim --method fastp --dedup --merge --memory $MEM --left $LEFTIN --right $RIGHTIN -c $CPU -o $WORKDIR/${ID}_fastp
+			rsync -a $SCRATCH/${ID}*.json logs/
+			rsync -a $SCRATCH/${ID}*.html logs/
+
 			#AAFTF trim --method fastp --cutright -c $CPU --memory $MEM --left $WORKDIR/${ID}_fastp_1P.fastq.gz --right $WORKDIR/${ID}_fastp_2P.fastq.gz -o $WORKDIR/${ID}_fastp2
 			AAFTF trim --method bbduk -c $CPU --memory $MEM --left $WORKDIR/${ID}_fastp_1P.fastq.gz --right $WORKDIR/${ID}_fastp_2P.fastq.gz -o $WORKDIR/${ID}
 		fi
@@ -120,7 +123,7 @@ do
 	if [ ! -f $CLEANDUP ]; then
 	    gunzip $CLEANDUP
 	fi
-    	AAFTF polish --method polca -i $CLEANDUP -o $POLISHED -c $CPU --left $LEFT  --right $RIGHT --mem $MEM
+    	AAFTF polish --method polca -i $CLEANDUP -o $POLISHED -c $CPU --left $LEFT  --right $RIGHT --mem $MEM -v
 	pigz $CLEANDUP
     fi
     
