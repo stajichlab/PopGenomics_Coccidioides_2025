@@ -33,18 +33,18 @@ def process_classtype(indata):
     n = 0
     with open(outfile, "w") as outfh:
         for record in records:
-            m = re.match(r'^(\S+)_R\.bin', record)
-            MAG = ""
+            m = re.match(r'^([^\.]+)\.', record)
+            Strain = ""
             if m:
-                MAG = m.group(1)
+                Strain = m.group(1)
             else:
-                m = re.match(r'^(\S+)\.bin', record)
-                if m:
-                    MAG = m.group(1)
+                if record.startswith("BGC"):
+                    # this is a BGC Bigscape entry
+                    print(f"skipping extraction of BGC {record} from {classtype}", file=sys.stderr)
                 else:
-                    print(f"cannot determine MAG parent from {record}", file=sys.stderr)
+                    print(f"cannot determine Strain parent from {record}", file=sys.stderr)
                     continue
-            fafile = os.path.join(inputdir, MAG, f"{record}.fasta")
+            fafile = os.path.join(inputdir, Strain, f"{record}.fasta")
             if not os.path.exists(fafile):
                 print(f"cannot find file {fafile} in type {classtype}", file=sys.stderr)
                 continue
