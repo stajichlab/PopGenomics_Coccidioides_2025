@@ -1,7 +1,7 @@
 #!/usr/bin/bash -l
 #SBATCH -N 1 -n 1 -c 24 --mem 32gb --out logs/make_gvcf.%a.log --time 48:00:00
 # -a 1-424
-
+module unload java
 module load picard
 module load gatk/4.6.1.0
 module load bcftools
@@ -37,7 +37,7 @@ fi
 hostname
 date
 IFS=,
-tail -n +2 $SAMPFILE | sed -n ${N}p | while read RUNACC STRAIN BIOSAMPLE CENTER EXPERIMENT PROJECT ORGANISM FILEBASE NOTES
+tail -n +2 $SAMPFILE | sed -n ${N}p | while read RUNACC STRAIN BIOSAMPLE CENTER EXPERIMENT PROJECT ORGANISM FILEBASE NOTES LOCUSTAG
 do
   echo "STRAIN is $STRAIN"
   GVCF=$GVCFFOLDER/$STRAIN.g.vcf

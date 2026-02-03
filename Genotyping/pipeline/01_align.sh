@@ -1,11 +1,11 @@
 #!/usr/bin/bash -l
 #SBATCH -N 1 -c 16 -n 1 --mem 32gb --out logs/bwa.%a.log --time 2:00:00 -a 1-90 -p short
+module unload java
 module load fastp
 module load bwa-mem2
 module load samtools
 module load picard
 module load gatk/4.6.1.0
-module load java
 module load workspace/scratch
 MEM=32g
 
@@ -48,7 +48,7 @@ if [ $N -gt $MAX ]; then
 fi
 
 IFS=,
-tail -n +2 $SAMPFILE | sed -n ${N}p | while read RUNACC STRAIN BIOSAMPLE CENTER EXPERIMENT PROJECT ORGANISM FILEBASE NOTES
+tail -n +2 $SAMPFILE | sed -n ${N}p | while read RUNACC STRAIN BIOSAMPLE CENTER EXPERIMENT PROJECT ORGANISM FILEBASE NOTES LOCUSTAG
 do
   FINALFILE=$ALNFOLDER/$STRAIN.$HTCEXT
   echo "To process $STRAIN and produce $FINALFILE"

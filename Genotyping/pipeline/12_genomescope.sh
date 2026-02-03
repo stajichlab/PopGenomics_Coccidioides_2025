@@ -35,7 +35,7 @@ IFS=,
 KMER=21
 READLEN=150
 IFS=,
-tail -n +2 $SAMPFILE | sed -n ${N}p | while read RUNACC STRAIN BIOSAMPLE CENTER EXPERIMENT PROJECT ORGANISM FILEBASE
+tail -n +2 $SAMPFILE | sed -n ${N}p | while read RUNACC STRAIN BIOSAMPLE CENTER EXPERIMENT PROJECT ORGANISM FILEBASE NOTES LOCUSTAG
 do
     # for this project has only a single file base  but this needs fixing otherse
     FINALFILE=$ALNFOLDER/$STRAIN.$HTCEXT
