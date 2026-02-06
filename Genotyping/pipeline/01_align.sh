@@ -1,9 +1,10 @@
 #!/usr/bin/bash -l
 #SBATCH -N 1 -c 16 -n 1 --mem 32gb --out logs/bwa.%a.log --time 2:00:00 -a 1-90 -p short
+hostname
 module unload java
 module load fastp
 module load bwa-mem2
-module load samtools
+module load samtools/1.19.2
 module load picard
 module load gatk/4.6.1.0
 module load workspace/scratch
@@ -95,6 +96,7 @@ do
       fi # DDFILE is created after this or already exists
       BAMSTOMERGE+=( $DDFILE )
     done
+    echo samtools merge --write-index -O $HTCFORMAT --threads $CPU --reference $REFGENOME $FINALFILE "${BAMSTOMERGE[@]}"
     samtools merge --write-index -O $HTCFORMAT --threads $CPU --reference $REFGENOME $FINALFILE "${BAMSTOMERGE[@]}"
     if [ -f $FINALFILE ]; then
       rm -f "${BAMSTOMERGE[@]}"
